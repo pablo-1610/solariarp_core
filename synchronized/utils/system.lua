@@ -9,5 +9,5 @@ end
 
 Fox.utils = {}
 
-Fox.utils.trace = trace
+Fox.trace = trace
 Fox.utils.tableNotNil = catchTableNotNil
