@@ -48,7 +48,9 @@ client_scripts {
     "client/main/*.lua",
     "client/ui/*.lua",
     "client/utils/*.lua",
-    "client/inventory/*.lua"
+    "client/inventory/*.lua",
+
+    "client/foxy/*.lua"
 }
 
 server_scripts {
@@ -62,7 +64,10 @@ server_scripts {
     "synchronized/inventory/itemsInfos.lua",
 
     "server/data/*.lua",
-    "server/main/*.lua"
+    "server/main/*.lua",
+    "server/utils/*.lua",
+
+    "server/foxy/*.lua"
 }
 
 

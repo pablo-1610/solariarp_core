@@ -95,10 +95,11 @@ function spawnPlayer(spawnIdx, cb)
 
         spawnLock = false
 
-        local mod = GetHashKey("a_f_y_femaleagent")
+        local mod = GetHashKey("mp_m_freemode_01")
         RequestModel(mod)
         while not HasModelLoaded(mod) do Citizen.Wait(10) end
         SetPlayerModel(PlayerId(), mod)
+        SetPedDefaultComponentVariation(PlayerPedId())
 
         NetworkSetFriendlyFireOption(true)
         SetCanAttackFriendly(PlayerPedId(), true, true)
@@ -132,8 +133,19 @@ function spawnPlayer(spawnIdx, cb)
         
         Citizen.SetTimeout(1500, function()
             SetEntityCoords(PlayerPedId(), -33.7, -4.09, 71.23, 0,0,0,0)
-            GiveWeaponToPed(PlayerPedId(), GetHashKey("weapon_rpg"), 15000, false, true)
+            FreezeEntityPosition(PlayerPedId(), false)
+            SetEntityVisible(PlayerPedId(), true, 0)
         end)
+
+        for v in EnumeratePeds() do
+            if v ~= pPed then
+                ResetEntityAlpha(v)
+                SetEntityNoCollisionEntity(v, pPed, true)
+                NetworkConcealPlayer(NetworkGetPlayerIndexFromPed(v), false, 1)
+                SetEntityVisible(v, true, 0)
+                SetPedDefaultComponentVariation(v)
+            end
+        end
     end)
 end
 
