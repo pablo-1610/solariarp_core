@@ -12,7 +12,7 @@ RMenu = setmetatable({}, RMenu)
 
 ---@type table
 local TotalMenus = {}
-
+--
 ---Add
 ---@param Type string
 ---@param Name string

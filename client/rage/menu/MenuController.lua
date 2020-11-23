@@ -122,7 +122,7 @@ function RageUI.GoLeft(Controls)
                 if IsDisabledControlJustPressed(Controls.Left.Keys[Index][1], Controls.Left.Keys[Index][2]) then
                     Controls.Left.Pressed = true
 
-                    Citizen.CreateThread(function()
+                    Fox.thread.tick(function()
                         Controls.Left.Active = true
 
                         Citizen.Wait(0.01)
@@ -143,7 +143,7 @@ function RageUI.GoLeft(Controls)
 
                         Controls.Left.Pressed = false
                         Wait(10)
-                    end)
+                    end, "RageUI")
 
                     break
                 end
@@ -159,7 +159,7 @@ function RageUI.GoRight(Controls)
                 if IsDisabledControlJustPressed(Controls.Right.Keys[Index][1], Controls.Right.Keys[Index][2]) then
                     Controls.Right.Pressed = true
 
-                    Citizen.CreateThread(function()
+                    Fox.thread.tick(function()
                         Controls.Right.Active = true
 
                         Citizen.Wait(0.01)
@@ -180,7 +180,7 @@ function RageUI.GoRight(Controls)
 
                         Controls.Right.Pressed = false
                         Wait(10)
-                    end)
+                    end, "RageUI")
 
                     break
                 end
@@ -195,7 +195,7 @@ function RageUI.GoSliderLeft(Controls)
             if not Controls.SliderLeft.Pressed then
                 if IsDisabledControlJustPressed(Controls.SliderLeft.Keys[Index][1], Controls.SliderLeft.Keys[Index][2]) then
                     Controls.SliderLeft.Pressed = true
-                    Citizen.CreateThread(function()
+                    Fox.thread.tick(function()
                         Controls.SliderLeft.Active = true
                         Citizen.Wait(1)
                         Controls.SliderLeft.Active = false
@@ -205,7 +205,7 @@ function RageUI.GoSliderLeft(Controls)
                             Controls.SliderLeft.Active = false
                         end
                         Controls.SliderLeft.Pressed = false
-                    end)
+                    end, "RageUI")
                     break
                 end
             end
@@ -219,7 +219,7 @@ function RageUI.GoSliderRight(Controls)
             if not Controls.SliderRight.Pressed then
                 if IsDisabledControlJustPressed(Controls.SliderRight.Keys[Index][1], Controls.SliderRight.Keys[Index][2]) then
                     Controls.SliderRight.Pressed = true
-                    Citizen.CreateThread(function()
+                    Fox.thread.tick(function()
                         Controls.SliderRight.Active = true
                         Citizen.Wait(1)
                         Controls.SliderRight.Active = false
@@ -229,7 +229,7 @@ function RageUI.GoSliderRight(Controls)
                             Controls.SliderRight.Active = false
                         end
                         Controls.SliderRight.Pressed = false
-                    end)
+                    end, "RageUI")
                     break
                 end
             end
@@ -269,7 +269,7 @@ function RageUI.Controls()
                             if IsDisabledControlJustPressed(Controls.Up.Keys[Index][1], Controls.Up.Keys[Index][2]) then
                                 Controls.Up.Pressed = true
 
-                                Citizen.CreateThread(function()
+                                Fox.thread.tick(function()
                                     RageUI.GoUp(Options)
 
                                     Citizen.Wait(175)
@@ -281,7 +281,7 @@ function RageUI.Controls()
                                     end
 
                                     Controls.Up.Pressed = false
-                                end)
+                                end, "RageUI")
 
                                 break
                             end
@@ -295,7 +295,7 @@ function RageUI.Controls()
                             if IsDisabledControlJustPressed(Controls.Down.Keys[Index][1], Controls.Down.Keys[Index][2]) then
                                 Controls.Down.Pressed = true
 
-                                Citizen.CreateThread(function()
+                                Fox.thread.tick(function()
                                     RageUI.GoDown(Options)
 
                                     Citizen.Wait(175)
@@ -307,7 +307,7 @@ function RageUI.Controls()
                                     end
 
                                     Controls.Down.Pressed = false
-                                end)
+                                end, "RageUI")
 
                                 break
                             end
@@ -328,7 +328,7 @@ function RageUI.Controls()
                             if IsDisabledControlJustPressed(Controls.Select.Keys[Index][1], Controls.Select.Keys[Index][2]) then
                                 Controls.Select.Pressed = true
 
-                                Citizen.CreateThread(function()
+                                Fox.thread.tick(function()
                                     Controls.Select.Active = true
 
                                     Citizen.Wait(0.01)
@@ -349,7 +349,7 @@ function RageUI.Controls()
 
                                     Controls.Select.Pressed = false
 
-                                end)
+                                end, "RageUI")
 
                                 break
                             end
@@ -363,7 +363,7 @@ function RageUI.Controls()
                             if IsDisabledControlJustPressed(Controls.Click.Keys[Index][1], Controls.Click.Keys[Index][2]) then
                                 Controls.Click.Pressed = true
 
-                                Citizen.CreateThread(function()
+                                Fox.thread.tick(function()
                                     Controls.Click.Active = true
 
                                     Citizen.Wait(0.01)
@@ -383,7 +383,7 @@ function RageUI.Controls()
                                     end
 
                                     Controls.Click.Pressed = false
-                                end)
+                                end, "RageUI")
 
                                 break
                             end

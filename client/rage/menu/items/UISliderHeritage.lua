@@ -4,7 +4,7 @@ local SettingsButton = {
     Text = { X = 8, Y = 3, Scale = 0.33 },
     SelectedSprite = { Dictionary = "commonmenu", Texture = "gradient_nav", Y = 0, Width = 431, Height = 38 },
 }
-
+--
 ---@type table
 local SettingsSlider = {
     Background = { X = 250, Y = 14.5, Width = 150, Height = 9 },

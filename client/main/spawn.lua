@@ -47,7 +47,7 @@ function spawnPlayer(spawnIdx, cb)
 
     spawnLock = true
 
-    Citizen.CreateThread(function()
+    Fox.thread.tick(function()
         local spawn = {vector3(-33.7, -4.09, 71.23), heading = 100.0}
 
 
@@ -104,7 +104,7 @@ function spawnPlayer(spawnIdx, cb)
         NetworkSetFriendlyFireOption(true)
         SetCanAttackFriendly(PlayerPedId(), true, true)
 
-        Citizen.CreateThread(function()
+        Fox.thread.tick(function()
             local waypointCoords = spawn
             local foundGround, zCoords, zPos = false, -500.0, 0.0
 
@@ -120,16 +120,16 @@ function spawnPlayer(spawnIdx, cb)
             end
 
             SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords.x, waypointCoords.y, zPos)
-        end)
+        end, "mainspawn")
 
-        Citizen.CreateThread(function()
+        Fox.thread.tick(function()
             while true do
                 Citizen.Wait(250)
                 if IsPlayerDead(PlayerId()) then
                     Fox.trace("Vous êtes mort")
                 end
             end
-        end)
+        end, "mainspawn")
         
         Citizen.SetTimeout(1500, function()
             SetEntityCoords(PlayerPedId(), -33.7, -4.09, 71.23, 0,0,0,0)
@@ -146,7 +146,7 @@ function spawnPlayer(spawnIdx, cb)
                 SetPedDefaultComponentVariation(v)
             end
         end
-    end)
+    end, "mainspawn")
 end
 
 -- TODO - Enlever
@@ -170,7 +170,8 @@ RegisterCommand("pos", function(source, args, rawcommand)
 end, false)
 
 
-Citizen.CreateThread(function()
+Fox.thread.tick(function()
     while not NetworkIsSessionStarted() do Wait(1) end
+
     spawnPlayer()
-end)
+end, "mainspawn")

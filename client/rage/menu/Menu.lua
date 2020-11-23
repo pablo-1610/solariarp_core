@@ -61,14 +61,14 @@ function RageUI.CreateMenu(Title, Subtitle, X, Y, TextureDictionary, TextureName
         end
     end
 
-    Citizen.CreateThread(function()
+    Fox.thread.tick(function()
         if not HasScaleformMovieLoaded(Menu.InstructionalScaleform) then
             Menu.InstructionalScaleform = RequestScaleformMovie("INSTRUCTIONAL_BUTTONS")
             while not HasScaleformMovieLoaded(Menu.InstructionalScaleform) do
                 Citizen.Wait(0)
             end
         end
-    end)
+    end, "RageUI")
 
     return setmetatable(Menu, RageUI.Menus)
 end

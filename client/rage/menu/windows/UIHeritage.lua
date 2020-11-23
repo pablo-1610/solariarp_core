@@ -4,7 +4,7 @@ local Heritage = {
     Mum = { Dictionary = "char_creator_portraits", X = 25, Width = 228, Height = 228 },
     Dad = { Dictionary = "char_creator_portraits", X = 195, Width = 228, Height = 228 },
 }
-
+--
 ---HeritageWindow
 ---@param Mum number
 ---@param Dad number

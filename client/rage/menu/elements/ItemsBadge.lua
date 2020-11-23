@@ -11,6 +11,7 @@ RageUI.BadgeStyle = {
             BadgeTexture = "mp_medal_bronze",
         }
     end,
+    --
     GoldMedal = function()
         return {
             BadgeTexture = "mp_medal_gold",

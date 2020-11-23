@@ -7,7 +7,7 @@ local Percentage = {
         Right = { X = 398, Y = 15, Scale = 0.35 },
     },
 }
-
+--
 ---PercentagePanel
 ---@param Percent number
 ---@param HeaderText string

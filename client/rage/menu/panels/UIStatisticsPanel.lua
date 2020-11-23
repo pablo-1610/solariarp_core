@@ -12,7 +12,7 @@ local Statistics = {
         [5] = { X = 200, Y = 27, Width = 2, Height = 10 },
     }
 }
-
+--
 ---StatisticPanel
 ---@param Percent number
 ---@param Text string

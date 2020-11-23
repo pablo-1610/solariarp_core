@@ -7,7 +7,7 @@ local SettingsButton = {
     RightText = { X = 420, Y = 4, Scale = 0.35 },
     SelectedSprite = { Dictionary = "commonmenu", Texture = "gradient_nav", Y = 0, Width = 431, Height = 38 },
 }
-
+--
 ---Button
 ---@param Label string
 ---@param Description string

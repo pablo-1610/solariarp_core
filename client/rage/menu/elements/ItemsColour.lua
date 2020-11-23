@@ -3,7 +3,7 @@
 --- Created by Dylan Malandain.
 --- DateTime: 24/07/2019 02:26
 ---
-
+--
 RageUI.ItemsColour = {
     PureWhite = { 255, 255, 255, 255 },
     White = { 240, 240, 240, 255 },

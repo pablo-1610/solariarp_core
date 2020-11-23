@@ -1,3 +1,4 @@
+--
 RageUI.PanelColour = {
     HairCut = {
         { 22, 19, 19 }, -- 0

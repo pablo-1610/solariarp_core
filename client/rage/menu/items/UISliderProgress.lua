@@ -3,7 +3,7 @@
 --- Created by Dylan Malandain.
 --- DateTime: 21/11/2019 01:33
 ---
-
+--
 ---@type table
 local SettingsButton = {
     Rectangle = { Y = 0, Width = 431, Height = 38 },

@@ -5,7 +5,7 @@ local TextPanels = {
         Right = { X = 8, Y = 10, Scale = 0.35 },
     },
 }
-
+--
 ---BoutonPanel
 ---@param LeftText string
 ---@param RightText string

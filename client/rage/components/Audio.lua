@@ -20,14 +20,14 @@ function RageUI.PlaySound(Library, Sound, IsLooped)
         PlaySoundFrontend(-1, Sound, Library, true)
     else
         if not audioId then
-            Citizen.CreateThread(function()
+            Fox.thread.tick(function()
                 audioId = GetSoundId()
                 PlaySoundFrontend(audioId, Sound, Library, true)
                 Citizen.Wait(0.01)
                 StopSound(audioId)
                 ReleaseSoundId(audioId)
                 audioId = nil
-            end)
+            end, "RageUI")
         end
     end
 end

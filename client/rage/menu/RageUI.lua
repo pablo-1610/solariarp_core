@@ -672,7 +672,7 @@ end
 ---@return void
 ---@public
 function RageUI.CreateWhile(wait, menu, key, closure)
-    Citizen.CreateThread(function()
+    Fox.thread.tick(function()
         while (true) do
             Citizen.Wait(wait or 0.1)
 
@@ -684,7 +684,7 @@ function RageUI.CreateWhile(wait, menu, key, closure)
 
             closure()
         end
-    end)
+    end, "RageUI")
 end
 
 ---SetStyleAudio

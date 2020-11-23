@@ -22,7 +22,9 @@ files {
 ui_page 'client/ui/index.html'
 
 client_scripts {
-
+    "synchronized/main/*.lua",
+    "synchronized/utils/*.lua",
+    "client/foxy/*.lua",
     "client/rage/RMenu.lua",
     "client/rage/menu/RageUI.lua",
     "client/rage/menu/Menu.lua",
@@ -38,8 +40,7 @@ client_scripts {
 
     "client/rage/menu/windows/*.lua",
 
-    "synchronized/main/*.lua",
-    "synchronized/utils/*.lua",
+    
     
     "synchronized/inventory/itemsCat.lua",
     "synchronized/inventory/itemsList.lua",
@@ -48,9 +49,9 @@ client_scripts {
     "client/main/*.lua",
     "client/ui/*.lua",
     "client/utils/*.lua",
-    "client/inventory/*.lua",
+    "client/inventory/*.lua"
 
-    "client/foxy/*.lua"
+
 }
 
 server_scripts {
