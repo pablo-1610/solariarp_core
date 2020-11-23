@@ -1,4 +1,4 @@
-ITEM_LIST = {
+ITEM_ACTIONS = {
     [ITEM_LIST.BREAD] = function()
         return {
             weight = 0.05,
