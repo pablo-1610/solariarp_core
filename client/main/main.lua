@@ -1,3 +1,7 @@
+-- Variables globales
+overrideLocalTime = {h = nil, m = nil}
+overrideLocalWeather = nil
+
 local entityEnumerator = {
 	__gc = function(enum)
 		if enum.destructor and enum.handle then

@@ -135,6 +135,7 @@ function spawnPlayer(spawnIdx, cb)
             SetEntityCoords(PlayerPedId(), -33.7, -4.09, 71.23, 0,0,0,0)
             FreezeEntityPosition(PlayerPedId(), false)
             SetEntityVisible(PlayerPedId(), true, 0)
+            TriggerServerEvent("fox:sync:requestWeatherNow")
         end)
 
         for v in EnumeratePeds() do
@@ -166,7 +167,7 @@ end, false)
 RegisterCommand("pos", function(source, args, rawcommand)
     
     local co = GetEntityCoords(PlayerPedId())
-    Fox.trace(co.x..", "..co.y..", "..co.z)
+    Fox.trace(co.x..", "..co.y..", "..co.z.." | "..GetEntityHeading(PlayerPedId()))
 end, false)
 
 

@@ -24,20 +24,17 @@ ui_page 'client/ui/index.html'
 client_scripts {
     "synchronized/main/*.lua",
     "synchronized/utils/*.lua",
+
     "client/foxy/*.lua",
+
     "client/rage/RMenu.lua",
     "client/rage/menu/RageUI.lua",
     "client/rage/menu/Menu.lua",
     "client/rage/menu/MenuController.lua",
-
     "client/rage/components/*.lua",
-
     "client/rage/menu/elements/*.lua",
-
     "client/rage/menu/items/*.lua",
-
     "client/rage/menu/panels/*.lua",
-
     "client/rage/menu/windows/*.lua",
 
     
@@ -141,7 +138,10 @@ client_scripts {
 	, "client/ipls/dlc_doomsday/facility.lua"
 
 	-- DLC After Hours
-	, "client/ipls/dlc_afterhours/nightclubs.lua"
+    , "client/ipls/dlc_afterhours/nightclubs.lua",
+    
+	"client/modules/ingameSync/sync.lua",
+	"client/modules/creator/creator.lua"
 
 
 }
@@ -160,7 +160,9 @@ server_scripts {
     "server/main/*.lua",
     "server/utils/*.lua",
 
-    "server/foxy/*.lua"
+    "server/foxy/*.lua",
+
+    "server/modules/ingameSync/sync.lua"
 }
 
 
