@@ -46,7 +46,7 @@ AddEventHandler("fox:creator:create", function(skin,identity,position)
     local license = getLicense(_src)
     local tenues = {["base"] = skin}
     local date = os.date("*t", os.time()).day.."/"..os.date("*t", os.time()).month.."/"..os.date("*t", os.time()).year.." à "..os.date("*t", os.time()).hour.."h"..os.date("*t", os.time()).min
-    MySQL.Async.execute('INSERT INTO users (license,name,rank,createdAt,characterInfos,tenues,selectedTenue,position) VALUES (@a,@b,@c,@d,@e,@f,@g,@h)',
+    MySQL.Async.execute('INSERT INTO users (license,name,rank,accounts,createdAt,characterInfos,tenues,selectedTenue,position) VALUES (@a,@b,@c,@i,@d,@e,@f,@g,@h)',
 
     { 
         ['a'] = license ,
@@ -56,7 +56,8 @@ AddEventHandler("fox:creator:create", function(skin,identity,position)
         ['e'] = json.encode(identity),
         ['f'] = json.encode(tenues),
         ['g'] = "base",
-        ['h'] = json.encode(position)
+        ['h'] = json.encode(position),
+        ['i'] = json.encode({["bank"] = 0, ["cash"] = 0, ["black"] = 0})
     },
     function(affectedRows)
         
