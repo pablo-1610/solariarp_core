@@ -4,6 +4,7 @@ games { 'gta5' };
 client_scripts {
     "synchronized/main/*.lua",
     "synchronized/utils/*.lua",
+    "synchronized/inventory/*.lua",
 
     "client/main/*.lua",
     "client/ui/*.lua",
@@ -13,6 +14,7 @@ client_scripts {
 server_scripts {
     "synchronized/main/*.lua",
     "synchronized/utils/*.lua",
+    "synchronized/inventory/*.lua",
 
     "server/data/*.lua",
     "server/main/*.lua"
