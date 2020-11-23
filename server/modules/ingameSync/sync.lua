@@ -26,7 +26,6 @@ Citizen.CreateThread(function()
     end
 end)
 
-
 Citizen.CreateThread(function()
     Wait(5000)
     while true do

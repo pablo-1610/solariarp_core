@@ -2,7 +2,7 @@ local initialPosition = {vec = vector3(683.75, 570.67, 129.40), heading = 162.34
 local lights = {{vec = vector3(689.96, 569.25, 130.46), heading = 252.61},{vec = vector3(685.23, 575.07, 130.46), heading = 343.05},{vec = vector3(678.39, 573.47, 130.46), heading = 67.71},{vec = vector3(681.08, 562.99, 129.69+2.30), heading = 163.81}}
 local createdLights = {}
 
-local PedIndex, DadIndex, MotherIndex, ArmsIndex, CheuveuxIndex, CouleurIndex, OeilIndex, BarbeIndex, TshirtIndex, TshirtIndex2, VesteIndex, VesteIndex2, PantalonIndex, PantalonIndex2, ChaussureIndex, ChaussureIndex2 = '', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+local PedIndex, DadIndex, MotherIndex, ArmsIndex, CheuveuxIndex, CouleurIndex, OeilIndex, BarbeIndex, TshirtIndex, TshirtIndex2, VesteIndex, VesteIndex2, PantalonIndex, PantalonIndex2, ChaussureIndex, ChaussureIndex2 = 'mp_m_freemode_01', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 local DadNumber = {"Benjamin", "Daniel", "Joshua", "Noah", "Andrew", "Juan", "Alex", "Isaac", "Evan", "Ethan", "Vincent", "Angel", "Diego", "Adrian", "Gabriel", "Michael", "Santiago", "Kevin", "Louis", "Samuel", "Anthony", "Pierre", "Niko"}
 local MotherNumber = {"Adelyn", "Emily", "Abigail", "Beverly", "Kristen", "Hailey", "June", "Daisy", "Elizabeth", "Addison", "Ava", "Cameron", "Samantha", "Madison", "Amber", "Heather", "Hillary", "Courtney", "Ashley", "Alyssa", "Mia", "Brittany"}
 local creatorMenus = {}
@@ -188,18 +188,43 @@ local function initiCreator()
                 RageUI.Separator("↓ ~b~Customisation ~s~↓")
                 for k,v in pairs(vars) do RageUI.ButtonWithStyle(v.var,nil, {RightLabel = "~r~Customiser ~s~→→"}, true, function(_,_,s) end, RMenu:Get('fox_creator', 'fox_'..v.menuDest)) end
                 RageUI.Separator("↓ ~o~Actions ~s~↓")
-                RageUI.ButtonWithStyle("~g~C'est parti !",nil, {RightLabel = "→→"}, infos.age ~= "" and infos.first ~= "" and infos.last ~= "", function(_,_,s) end)
+                RageUI.ButtonWithStyle("~g~C'est parti !",nil, {RightLabel = "→→"}, infos.age ~= "" and infos.first ~= "" and infos.last ~= "", function(_,_,s)
+                    if s then
+                        RageUI.CloseAll()
+                        local PlySkin = {
+				        	PedIndex = PedIndex, 
+				        	DadIndex = DadIndex, 
+				        	MotherIndex = MotherIndex, 
+				        	ArmsIndex = ArmsIndex, 
+				        	CheuveuxIndex = CheuveuxIndex, 
+				        	CouleurIndex = CouleurIndex, 
+				        	OeilIndex = OeilIndex, 
+				        	BarbeIndex = BarbeIndex, 
+				        	TshirtIndex = TshirtIndex, 
+				        	TshirtIndex2 = TshirtIndex2, 
+				        	VesteIndex = VesteIndex, 
+				        	VesteIndex2 = VesteIndex2, 
+				        	PantalonIndex = PantalonIndex, 
+				        	PantalonIndex2 = PantalonIndex2, 
+				        	ChaussureIndex = ChaussureIndex, 
+				        	ChaussureIndex2 = ChaussureIndex2
+				        }
+                        TriggerServerEvent("fox:creator:create", PlySkin,infos,GetEntityCoords(PlayerPedId()))
+                    end
+                 end)
 
             end, function()    
             end, 1)
 
+            SetPedHeadBlendData(PlayerPedId(), DadIndex, MotherIndex, nil, DadIndex, MotherIndex, nil, 0.5, 0.5, nil, true)
+            
             RageUI.IsVisible(RMenu:Get("fox_creator",'fox_heredite'),true,true,true,function()
                 RageUI.HeritageWindow(MotherIndex, DadIndex)
                 RageUI.Separator("↓ ~b~Héridité ~s~↓")
                 RageUI.List("Mère:", MotherNumber, MotherIndex, nil, {}, true, function(Hovered, Active, Selected, Index)
                     if Active then 
                         MotherIndex = Index
-                        SetPedDefaultComponentVariation(PlayerPedId())
+                        --SetPedDefaultComponentVariation(PlayerPedId())
                         SetPedHeadBlendData(PlayerPedId(), DadIndex, MotherIndex, nil, DadIndex, MotherIndex, nil, 0.5, 0.5, nil, true)
                     end
                     
@@ -207,7 +232,7 @@ local function initiCreator()
                 RageUI.List("Père:", DadNumber, DadIndex, nil, {}, true, function(Hovered, Active, Selected, Index)
                     if Active then 
                         DadIndex = Index
-                        SetPedDefaultComponentVariation(PlayerPedId())
+                        --SetPedDefaultComponentVariation(PlayerPedId())
                         SetPedHeadBlendData(PlayerPedId(), DadIndex, MotherIndex, nil, DadIndex, MotherIndex, nil, 0.5, 0.5, nil, true)
                     end
                     
@@ -517,3 +542,4 @@ local function initiCreator()
 end
 
 Fox.creator = initiCreator
+

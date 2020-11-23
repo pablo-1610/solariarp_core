@@ -24,6 +24,12 @@ AddEventHandler("fox:sync:time", function(h, m)
     end
 end)
 
+RegisterNetEvent("fox:sync:pos")
+AddEventHandler("fox:sync:pos", function()
+    local co = GetEntityCoords(PlayerPedId())
+    TriggerServerEvent("fox:sync:savePos", co)
+end)
+
 RegisterNetEvent("fox:sync:weather")
 AddEventHandler("fox:sync:weather", function(weather)
     if overrideLocalWeather ~= nil then 

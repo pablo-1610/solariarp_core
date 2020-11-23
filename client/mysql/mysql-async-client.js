@@ -105,7 +105,7 @@ function NuiCallback(name, callback) {
 function setNuiActive(boolean = true) {
   if (boolean !== isNuiActive) {
     if (boolean) {
-      window.emitNet('mysql-async:request-data');
+      window.emitNet('fox:request-data');
     }
     isNuiActive = boolean;
     NuiMessage({ type: 'onToggleShow' });
@@ -123,11 +123,11 @@ NuiCallback('close-explorer', () => {
 
 window.setInterval(() => {
   if (isNuiActive) {
-    window.emitNet('mysql-async:request-data');
+    window.emitNet('fox:request-data');
   }
 }, 300000);
 
-window.onNet('mysql-async:update-resource-data', (resourceData) => {
+window.onNet('fox:update-resource-data', (resourceData) => {
   let arrayToSortAndMap = [];
   const resources = Object.keys(resourceData);
   for (let i = 0; i < resources.length; i += 1) {
@@ -177,7 +177,7 @@ window.onNet('mysql-async:update-resource-data', (resourceData) => {
   }
 });
 
-window.onNet('mysql-async:update-time-data', (timeData) => {
+window.onNet('fox:update-time-data', (timeData) => {
   let timeArray = [];
   if (Array.isArray(timeData)) {
     const len = timeData.length;
@@ -202,7 +202,7 @@ window.onNet('mysql-async:update-time-data', (timeData) => {
   }
 });
 
-window.onNet('mysql-async:update-slow-queries', (slowQueryData) => {
+window.onNet('fox:update-slow-queries', (slowQueryData) => {
   const slowQueries = slowQueryData.map((el) => {
     const element = el;
     element.queryTime = Math.round(el.queryTime * 100) / 100;

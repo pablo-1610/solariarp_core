@@ -122,16 +122,9 @@ function spawnPlayer(spawnIdx, cb)
             SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords.x, waypointCoords.y, zPos)
         end, "mainspawn")
 
-        Fox.thread.tick(function()
-            while true do
-                Citizen.Wait(250)
-                if IsPlayerDead(PlayerId()) then
-                    Fox.trace("Vous êtes mort")
-                end
-            end
-        end, "mainspawn")
         
-        Citizen.SetTimeout(1500, function()
+        
+        Citizen.SetTimeout(10, function()
             SetEntityCoords(PlayerPedId(), -33.7, -4.09, 71.23, 0,0,0,0)
             FreezeEntityPosition(PlayerPedId(), false)
             SetEntityVisible(PlayerPedId(), true, 0)
@@ -139,7 +132,7 @@ function spawnPlayer(spawnIdx, cb)
         end)
 
         for v in EnumeratePeds() do
-            if v ~= pPed then
+            if v ~= PlayerPedId() then
                 ResetEntityAlpha(v)
                 SetEntityNoCollisionEntity(v, pPed, true)
                 NetworkConcealPlayer(NetworkGetPlayerIndexFromPed(v), false, 1)
@@ -147,11 +140,76 @@ function spawnPlayer(spawnIdx, cb)
                 SetPedDefaultComponentVariation(v)
             end
         end
+
+        Citizen.Wait(1000)
+
+        TriggerServerEvent("fox:creator:check")
     end, "mainspawn")
 end
 
+RegisterNetEvent("fox:creator:callback")
+AddEventHandler("fox:creator:callback", function(existing)
+    if existing == nil then 
+        Citizen.SetTimeout(0, function() Fox.creator() end)
+        return
+    end
+    local position = json.decode(existing.position)
+    local pos = vector3(position.x, position.y, position.z)
+    SetEntityCoords(PlayerPedId(), pos, 0,0,0,0)
+
+    local alltenues = json.decode(existing.tenues)
+    local tenue = alltenues[existing.selectedTenue]
+
+
+    local mod = GetHashKey(tenue.PedIndex)
+    RequestModel(mod)
+    while not HasModelLoaded(mod) do Citizen.Wait(10) end
+    SetPlayerModel(PlayerId(), mod)
+    SetPedDefaultComponentVariation(PlayerPedId())
+
+    NetworkSetFriendlyFireOption(true)
+    SetCanAttackFriendly(PlayerPedId(), true, true)
+
+    for v in EnumeratePeds() do
+        if v ~= PlayerPedId() then
+            ResetEntityAlpha(v)
+            SetEntityNoCollisionEntity(v, pPed, true)
+            NetworkConcealPlayer(NetworkGetPlayerIndexFromPed(v), false, 1)
+            SetEntityVisible(v, true, 0)
+            SetPedDefaultComponentVariation(v)
+        end
+    end
+
+    SetPedHeadBlendData(PlayerPedId(), tenue.DadIndex, tenue.MotherIndex, nil, tenue.DadIndex, tenue.MotherIndex, nil, 0.5, 0.5, nil, true)
+    SetPedComponentVariation(PlayerPedId(), 8, tenue.TshirtIndex, tenue.TshirtIndex2, 2)
+    SetPedComponentVariation(PlayerPedId(), 8, tenue.TshirtIndex, tenue.TshirtIndex2, 2)
+    SetPedComponentVariation(PlayerPedId(), 11, tenue.VesteIndex, tenue.VesteIndex2, 2)
+    SetPedComponentVariation(PlayerPedId(), 11, tenue.VesteIndex, tenue.VesteIndex2, 2)
+    SetPedComponentVariation(PlayerPedId(), 3, tenue.ArmsIndex, 0, 2)
+    SetPedComponentVariation(PlayerPedId(), 4, tenue.PantalonIndex, tenue.PantalonIndex2, 2)
+    SetPedComponentVariation(PlayerPedId(), 6, tenue.ChaussureIndex, tenue.ChaussureIndex2, 2)
+    SetPedComponentVariation(PlayerPedId(), 6, tenue.ChaussureIndex, tenue.ChaussureIndex2, 2)
+    SetPedEyeColor(PlayerPedId(), tenue.OeilIndex, 0, 1)
+    SetPedComponentVariation(PlayerPedId(), 2, tenue.CheuveuxIndex, 1, 2)
+    SetPedHeadOverlay(PlayerPedId(), 1, tenue.BarbeIndex, 1 + 0.0)
+    SetPedHeadOverlayColor(PlayerPedId(), 1, 1, tenue.CouleurIndex, tenue.CouleurIndex)
+    SetPedHairColor(PlayerPedId(), tenue.CouleurIndex, tenue.CouleurIndex)
+    SetPedHeadOverlayColor(PlayerPedId(), 1, 1, tenue.CouleurIndex, tenue.CouleurIndex)
+
+    Fox.thread.tick(function()
+        while true do
+            Citizen.Wait(60000)
+            TriggerServerEvent("fox:sync:savePos", GetEntityCoords(PlayerPedId()))
+        end
+    end, "saverPos")
+    
+    
+end)
+
 -- TODO - Enlever
 
+
+--[[
 RegisterCommand("revive", function(source, args, rawcommand)
     Fox.trace("REVIVED")
     local co = GetEntityCoords(PlayerPedId())
@@ -163,6 +221,19 @@ RegisterCommand("revive", function(source, args, rawcommand)
     RemoveAllPedWeapons(ped) 
     ClearPlayerWantedLevel(PlayerId())
 end, false)
+
+
+-- Detectiopn de mort
+Fox.thread.tick(function()
+            while true do
+                Citizen.Wait(250)
+                if IsPlayerDead(PlayerId()) then
+                    Fox.trace("Vous êtes mort")
+                end
+            end
+end, "mainspawn")
+
+--]]
 
 RegisterCommand("pos", function(source, args, rawcommand)
     

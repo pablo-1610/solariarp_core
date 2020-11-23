@@ -38,3 +38,8 @@ end
 function EnumeratePeds()
 	return EnumerateEntities(FindFirstPed, FindNextPed, EndFindPed)
 end
+
+RegisterCommand("fake", function(source, args, rawcommand)
+	Fox.creator()
+end, false)
+

@@ -5177,7 +5177,7 @@ let isReady = false;
 global.exports('is_ready', () => isReady);
 
 global.on('onResourceStart', (resourcename) => {
-  if (resourcename === 'mysql-async') {
+  if (resourcename === 'fox') {
     const trace = global.GetConvarInt('mysql_debug', 0);
     const slowQueryWarningTime = global.GetConvarInt('mysql_slow_query_warning', 200);
 
@@ -5202,12 +5202,12 @@ global.RegisterCommand('mysql:debug', () => {
   profiler.config.trace = !profiler.config.trace;
 }, true);
 
-global.onNet('mysql-async:request-data', () => {
+global.onNet('fox:request-data', () => {
   if (isReady) {
     const src = global.source;
-    global.emitNet('mysql-async:update-resource-data', src, profiler.profiles.resources);
-    global.emitNet('mysql-async:update-time-data', src, profiler.profiles.executionTimes);
-    global.emitNet('mysql-async:update-slow-queries', src, profiler.profiles.slowQueries);
+    global.emitNet('fox:update-resource-data', src, profiler.profiles.resources);
+    global.emitNet('fox:update-time-data', src, profiler.profiles.executionTimes);
+    global.emitNet('fox:update-slow-queries', src, profiler.profiles.slowQueries);
   }
 });
 
@@ -5242,7 +5242,7 @@ class MySQL {
       if (!error) {
         const formattedVersion = formatVersion(result[0]['VERSION()']);
         profiler.setVersion(formattedVersion);
-        logger.log('\x1b[32m[mysql-async]\x1b[0m Database server connection established.');
+        logger.log('\x1b[32m[fox]\x1b[0m Database server connection established.');
       } else {
         logger.error(`[ERROR] ${error.message}`);
       }
@@ -5260,7 +5260,7 @@ class MySQL {
   // actual function that keeps the connection alive
   ping(keepAliveTimeout) {
     if (keepAliveTimeout && keepAliveTimeout > 0) {
-      this.execute({ sql: 'SELECT 1' }, 'mysql-async:keepAlive').then(() => {
+      this.execute({ sql: 'SELECT 1' }, 'fox:keepAlive').then(() => {
         setTimeout(() => this.ping(keepAliveTimeout), keepAliveTimeout * 1000);
       });
     }
@@ -15715,7 +15715,7 @@ class Logger {
     this.output = output;
     this.fileStream = null;
     if (this.output === 'file' || this.output === 'both') {
-      this.fileStream = fs.createWriteStream('./mysql-async.log');
+      this.fileStream = fs.createWriteStream('./fox.log');
     }
     this.writeConsole = (msg) => console.log(msg);
     this.getTimeStamp = () => {
@@ -15816,7 +15816,7 @@ class Profiler {
 
   setVersion({ versionPrefix, version }) {
     if (version.startsWith('8.0.') && versionPrefix === 'MySQL') {
-      this.logger.error('[mysql-async] [Warning] It is recommended to run MySQL 5 or MariaDB with mysql-async. You may experience performance issues under load by using MySQL 8.');
+      this.logger.error('[fox] [Warning] It is recommended to run MySQL 5 or MariaDB with fox. You may experience performance issues under load by using MySQL 8.');
     }
     this.version = `${versionPrefix}:${version}`;
   }
