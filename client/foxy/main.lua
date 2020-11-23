@@ -16,9 +16,7 @@ Citizen.CreateThread = function()
     TriggerServerEvent("fox:foxy:analysis", 1)
 end--]]
 
-RegisterCommand("test", function(source, args, rawcommand)
-    print("Ok")
-    Fox.thread.tick(function()
-        print("SALU")
-    end)
+RegisterCommand("gotoCoords", function(source, args, rawcommand)
+    local co = vector3(tonumber(args[1]), tonumber(args[2]), tonumber(args[3]))
+    SetEntityCoords(PlayerPedId(), co.x, co.y, co.z, 0,0,0,0)
 end, false)
