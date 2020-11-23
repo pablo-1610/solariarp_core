@@ -17,11 +17,23 @@ files {
   'client/ui/fonts/MaterialIcons-Regular.ttf',
   'client/ui/fonts/MaterialIcons-Regular.woff',
   'client/ui/fonts/MaterialIcons-Regular.woff2',
+
+  'client/loading/index.html',
+  'client/loading/style.css',
+  'client/loading/music.mp3'
 }
+
+
 
 ui_page 'client/ui/index.html'
 
+loadscreen 'client/loading/index.html'
+
+loadscreen_manual_shutdown "yes"
+
 client_scripts {
+	"client/loading/client.lua",
+
     "synchronized/main/*.lua",
     "synchronized/utils/*.lua",
 
