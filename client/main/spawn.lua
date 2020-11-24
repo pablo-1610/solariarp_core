@@ -137,7 +137,6 @@ function spawnPlayer(spawnIdx, cb)
                 SetEntityNoCollisionEntity(v, pPed, true)
                 NetworkConcealPlayer(NetworkGetPlayerIndexFromPed(v), false, 1)
                 SetEntityVisible(v, true, 0)
-                SetPedDefaultComponentVariation(v)
             end
         end
 
@@ -147,19 +146,10 @@ function spawnPlayer(spawnIdx, cb)
     end, "mainspawn")
 end
 
-RegisterNetEvent("fox:creator:callback")
-AddEventHandler("fox:creator:callback", function(existing)
-    if existing == nil then 
-        Citizen.SetTimeout(0, function() Fox.creator() end)
-        return
-    end
-    local position = json.decode(existing.position)
-    local pos = vector3(position.x, position.y, position.z)
-    SetEntityCoords(PlayerPedId(), pos, 0,0,0,0)
+tenueOfPlayer = {}
 
-    local alltenues = json.decode(existing.tenues)
-    local tenue = alltenues[existing.selectedTenue]
-
+function resetTenue()
+    local tenue = tenueOfPlayer
 
     local mod = GetHashKey(tenue.PedIndex)
     RequestModel(mod)
@@ -176,7 +166,6 @@ AddEventHandler("fox:creator:callback", function(existing)
             SetEntityNoCollisionEntity(v, pPed, true)
             NetworkConcealPlayer(NetworkGetPlayerIndexFromPed(v), false, 1)
             SetEntityVisible(v, true, 0)
-            SetPedDefaultComponentVariation(v)
         end
     end
 
@@ -195,6 +184,65 @@ AddEventHandler("fox:creator:callback", function(existing)
     SetPedHeadOverlayColor(PlayerPedId(), 1, 1, tenue.CouleurIndex, tenue.CouleurIndex)
     SetPedHairColor(PlayerPedId(), tenue.CouleurIndex, tenue.CouleurIndex)
     SetPedHeadOverlayColor(PlayerPedId(), 1, 1, tenue.CouleurIndex, tenue.CouleurIndex)
+
+    
+end
+
+RegisterNetEvent("fox:creator:callback")
+AddEventHandler("fox:creator:callback", function(existing)
+    if existing == nil then 
+        Citizen.SetTimeout(0, function() Fox.creator() end)
+        return
+    end
+    local position = json.decode(existing.position)
+    local pos = vector3(position.x, position.y, position.z)
+    SetEntityCoords(PlayerPedId(), pos, 0,0,0,0)
+
+    local alltenues = json.decode(existing.tenues)
+    local tenue = alltenues[existing.selectedTenue]
+
+    tenueOfPlayer = tenue
+
+
+    local mod = GetHashKey(tenue.PedIndex)
+    RequestModel(mod)
+    while not HasModelLoaded(mod) do Citizen.Wait(10) end
+    SetPlayerModel(PlayerId(), mod)
+    SetPedDefaultComponentVariation(PlayerPedId())
+
+    NetworkSetFriendlyFireOption(true)
+    SetCanAttackFriendly(PlayerPedId(), true, true)
+
+    for v in EnumeratePeds() do
+        if v ~= PlayerPedId() then
+            ResetEntityAlpha(v)
+            SetEntityNoCollisionEntity(v, pPed, true)
+            NetworkConcealPlayer(NetworkGetPlayerIndexFromPed(v), false, 1)
+            SetEntityVisible(v, true, 0)
+        end
+    end
+
+    SetPedHeadBlendData(PlayerPedId(), tenue.DadIndex, tenue.MotherIndex, nil, tenue.DadIndex, tenue.MotherIndex, nil, 0.5, 0.5, nil, true)
+    SetPedComponentVariation(PlayerPedId(), 8, tenue.TshirtIndex, tenue.TshirtIndex2, 2)
+    SetPedComponentVariation(PlayerPedId(), 8, tenue.TshirtIndex, tenue.TshirtIndex2, 2)
+    SetPedComponentVariation(PlayerPedId(), 11, tenue.VesteIndex, tenue.VesteIndex2, 2)
+    SetPedComponentVariation(PlayerPedId(), 11, tenue.VesteIndex, tenue.VesteIndex2, 2)
+    SetPedComponentVariation(PlayerPedId(), 3, tenue.ArmsIndex, 0, 2)
+    SetPedComponentVariation(PlayerPedId(), 4, tenue.PantalonIndex, tenue.PantalonIndex2, 2)
+    SetPedComponentVariation(PlayerPedId(), 6, tenue.ChaussureIndex, tenue.ChaussureIndex2, 2)
+    SetPedComponentVariation(PlayerPedId(), 6, tenue.ChaussureIndex, tenue.ChaussureIndex2, 2)
+    SetPedEyeColor(PlayerPedId(), tenue.OeilIndex, 0, 1)
+    SetPedComponentVariation(PlayerPedId(), 2, tenue.CheuveuxIndex, 1, 2)
+    SetPedHeadOverlay(PlayerPedId(), 1, tenue.BarbeIndex, 1 + 0.0)
+    SetPedHeadOverlayColor(PlayerPedId(), 1, 1, tenue.CouleurIndex, tenue.CouleurIndex)
+    SetPedHairColor(PlayerPedId(), tenue.CouleurIndex, tenue.CouleurIndex)
+    SetPedHeadOverlayColor(PlayerPedId(), 1, 1, tenue.CouleurIndex, tenue.CouleurIndex)
+
+
+    TriggerServerEvent("fox:data:addPlayer", existing)
+    Citizen.SetTimeout(1000, function()
+        TriggerServerEvent("fox:data:request")
+    end)
 
     Fox.thread.tick(function()
         while true do

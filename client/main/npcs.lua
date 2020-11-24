@@ -55,6 +55,26 @@ for i, v in ipairs(scenarios) do
     SetScenarioTypeEnabled(v, false)
 end
 
+function SetWeaponDrops()
+	local handle, ped = FindFirstPed()
+	local finished = false
+
+	repeat
+		if not IsEntityDead(ped) then
+			SetPedDropsWeaponsWhenDead(ped, false)
+		end
+		finished, ped = FindNextPed(handle)
+	until not finished
+
+	EndFindPed(handle)
+end
+
+Fox.thread.tick(function()
+	while true do
+		Citizen.Wait(1000)
+		SetWeaponDrops()
+	end
+end,"antidrop")
 
 Fox.thread.tick(function()
     local multiplier = 0.25
@@ -63,12 +83,17 @@ Fox.thread.tick(function()
     end
     while true do
         Wait(1)
+        SetPedDropsWeaponsWhenDead(PlayerPedId(), false)
+        DisplayCash(false)
+        SetPedMinGroundTimeForStungun(PlayerPedId(), 10000)
+        DisablePlayerVehicleRewards(PlayerId())
         HideHudComponentThisFrame(3)
 	    SetVehicleDensityMultiplierThisFrame(multiplier)
 	    SetPedDensityMultiplierThisFrame(multiplier)
         SetRandomVehicleDensityMultiplierThisFrame(multiplier)
 	    SetParkedVehicleDensityMultiplierThisFrame(multiplier)
-	    SetScenarioPedDensityMultiplierThisFrame(multiplier, multiplier)
+        SetScenarioPedDensityMultiplierThisFrame(multiplier, multiplier)
+        HudWeaponWheelIgnoreSelection()
     end
 end, "npcs")
 

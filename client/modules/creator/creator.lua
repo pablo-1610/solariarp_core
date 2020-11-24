@@ -244,6 +244,10 @@ local function initiCreator()
 
             RageUI.IsVisible(RMenu:Get("fox_creator",'fox_haut'),true,true,true,function()
                 RageUI.Separator("↓ ~b~Customisation ~s~↓")
+                
+                SetPedComponentVariation(PlayerPedId(), 8, TshirtIndex, TshirtIndex2, 2)
+                SetPedComponentVariation(PlayerPedId(), 11, VesteIndex, VesteIndex2, 2)
+                SetPedComponentVariation(PlayerPedId(), 3, ArmsIndex, 0, 2)
 
                 local TshirtFound = {}
                 local TshirtColorFound = {}
@@ -255,7 +259,10 @@ local function initiCreator()
                 for i = 0 , GetNumberOfPedTextureVariations(PlayerPedId(), 8, TshirtIndex), 1 do TshirtColorFound[i] = i end
                 for i = 0 , GetNumberOfPedDrawableVariations(PlayerPedId(), 11), 1 do VesteFound[i] = i end
                 for i = 0 , GetNumberOfPedTextureVariations(PlayerPedId(), 11, VesteIndex), 1 do VesteColorFound[i] = i end
-                for i = 0, GetNumberOfPedDrawableVariations(PlayerPedId(), 3)-1, 1 do ArmsFound[i] = i end
+
+                for i = 0, GetNumberOfPedDrawableVariations(PlayerPedId(), 3)-1, 1 do 
+                    ArmsFound[i] = i 
+                end
 
                 RageUI.List("T-Shirt:", TshirtFound, TshirtIndex, nil, {}, true, function(Hovered, Active, Selected, Index)
                     if Active then 
@@ -274,6 +281,7 @@ local function initiCreator()
                 RageUI.List("Veste:", VesteFound, VesteIndex, nil, {}, true, function(Hovered, Active, Selected, Index)
                     if Active then 
                         VesteIndex = Index
+                        
                         SetPedComponentVariation(PlayerPedId(), 11, VesteIndex, VesteIndex2, 2)
                     end
                 end)

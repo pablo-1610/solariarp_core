@@ -58,7 +58,8 @@ client_scripts {
     "client/main/*.lua",
     "client/ui/*.lua",
     "client/utils/*.lua",
-    "client/inventory/*.lua"
+	"client/inventory/*.lua",
+	"client/data/*.lua"
 
     , "client/ipls/lib/common.lua"
 	, "client/ipls/lib/observers/interiorIdObserver.lua"
