@@ -1,10 +1,11 @@
 ITEM_ACTIONS = {
-    [ITEM_LIST.BREAD] = function()
-        return {
-            weight = 0.05,
-            category = ITEMS_CAT.FOOD,
-            args = {target = "hunger"},
-            use = ITEMS_CAT_USE[category](args)
-        }
-    end
+    [ITEM_LIST.BREAD] = {
+        weight = 0.6,
+        category = ITEMS_CAT.FOOD,
+        args = {target = "hunger"},
+        use = function()
+            Fox.trace("USED")
+        end
+    }
 }
+

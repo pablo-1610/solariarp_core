@@ -30,10 +30,13 @@ end
     
 local hudTop = 0.805
 local hudMargin = 0.160
+
+
 local hudSpace = 0.028
 
 
 local function initialize()
+
     Fox.thread.tick(function()
         while true do
             if shouldBeDisplayed then

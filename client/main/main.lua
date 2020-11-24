@@ -77,6 +77,7 @@ RegisterCommand("revive", function(source, args, rawcommand)
 end)
 
 
+
 RegisterCommand("fake", function(source, args, rawcommand)
 	Fox.creator()
 end, false)
