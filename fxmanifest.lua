@@ -20,7 +20,11 @@ files {
 
   'client/loading/index.html',
   'client/loading/style.css',
-  'client/loading/music.mp3'
+  'client/loading/music.mp3',
+
+  "client/ui/scripts/listener.js",
+  "client/ui/scripts/SoundPlayer.js",
+  "client/ui/scripts/functions.js"
 }
 
 
@@ -154,7 +158,9 @@ client_scripts {
     , "client/ipls/dlc_afterhours/nightclubs.lua",
     
 	"client/modules/ingameSync/sync.lua",
-	"client/modules/creator/creator.lua"
+	"client/modules/creator/creator.lua",
+
+	"client/ui/api/*.lua"
 
 
 }

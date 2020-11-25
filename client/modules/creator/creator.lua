@@ -26,6 +26,7 @@ local function isint(n)
 end
 
 local function initiCreator()
+    PlayUrl("creator", "https://youtu.be/8DSeZji2x-Y", 0.30, true)
     DoScreenFadeOut(1200)
     while not IsScreenFadedOut() do Citizen.Wait(10) end
     Citizen.Wait(1000)
@@ -226,6 +227,11 @@ local function initiCreator()
                         SetVehicleEngineOn(bike, true, true, false)
                         TaskWarpPedIntoVehicle(PlayerPedId(), bike, -1)
                         blockControls = false
+                        while getVolume("creator") > 0.0 do
+                            setVolume("creator", getVolume("creator") - 0.01)
+                            Wait(100)
+                        end
+                        Destroy("creator")
                         DoScreenFadeIn(1000)
                         
                         FreezeEntityPosition(PlayerPedId(), false)
