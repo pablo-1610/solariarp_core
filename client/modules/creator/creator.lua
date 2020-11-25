@@ -2,7 +2,7 @@ local initialPosition = {vec = vector3(683.75, 570.67, 129.40), heading = 162.34
 local lights = {{vec = vector3(689.96, 569.25, 130.46), heading = 252.61},{vec = vector3(685.23, 575.07, 130.46), heading = 343.05},{vec = vector3(678.39, 573.47, 130.46), heading = 67.71},{vec = vector3(681.08, 562.99, 129.69+2.30), heading = 163.81}}
 local createdLights = {}
 
-local PedIndex, DadIndex, MotherIndex, ArmsIndex, CheuveuxIndex, CouleurIndex, OeilIndex, BarbeIndex, TshirtIndex, TshirtIndex2, VesteIndex, VesteIndex2, PantalonIndex, PantalonIndex2, ChaussureIndex, ChaussureIndex2 = 'mp_m_freemode_01', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+local PedIndex, DadIndex, MotherIndex, ArmsIndex, CheuveuxIndex, CouleurIndex, OeilIndex, BarbeIndex, TshirtIndex, TshirtIndex2, VesteIndex, VesteIndex2, PantalonIndex, PantalonIndex2, ChaussureIndex, ChaussureIndex2 = 'mp_m_freemode_01', 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 local DadNumber = {"Benjamin", "Daniel", "Joshua", "Noah", "Andrew", "Juan", "Alex", "Isaac", "Evan", "Ethan", "Vincent", "Angel", "Diego", "Adrian", "Gabriel", "Michael", "Santiago", "Kevin", "Louis", "Samuel", "Anthony", "Pierre", "Niko"}
 local MotherNumber = {"Adelyn", "Emily", "Abigail", "Beverly", "Kristen", "Hailey", "June", "Daisy", "Elizabeth", "Addison", "Ava", "Cameron", "Samantha", "Madison", "Amber", "Heather", "Hillary", "Courtney", "Ashley", "Alyssa", "Mia", "Brittany"}
 local creatorMenus = {}
@@ -176,6 +176,8 @@ local function initiCreator()
         end
     end, "custom")
 
+    local toReset = "~r~Appuyez sur ~b~entrer ~r~pour la variation ~y~0 ~r~!"
+
     Fox.thread.tick(function()
        while menuShouldBeOpened do 
             RageUI.IsVisible(RMenu:Get("fox_creator",'fox_creator_main'),true,true,true,function()
@@ -263,7 +265,7 @@ local function initiCreator()
                     if Active then 
                         MotherIndex = Index
                         --SetPedDefaultComponentVariation(PlayerPedId())
-                        SetPedHeadBlendData(PlayerPedId(), DadIndex, MotherIndex, nil, DadIndex, MotherIndex, nil, 0.5, 0.5, nil, true)
+                        --SetPedHeadBlendData(PlayerPedId(), DadIndex, MotherIndex, nil, DadIndex, MotherIndex, nil, 0.5, 0.5, nil, true)
                     end
                     
                 end)
@@ -271,7 +273,7 @@ local function initiCreator()
                     if Active then 
                         DadIndex = Index
                         --SetPedDefaultComponentVariation(PlayerPedId())
-                        SetPedHeadBlendData(PlayerPedId(), DadIndex, MotherIndex, nil, DadIndex, MotherIndex, nil, 0.5, 0.5, nil, true)
+                        --SetPedHeadBlendData(PlayerPedId(), DadIndex, MotherIndex, nil, DadIndex, MotherIndex, nil, 0.5, 0.5, nil, true)
                     end
                     
                 end)
@@ -302,39 +304,44 @@ local function initiCreator()
                     ArmsFound[i] = i 
                 end
 
-                RageUI.List("T-Shirt:", TshirtFound, TshirtIndex, nil, {}, true, function(Hovered, Active, Selected, Index)
-                    if Active then 
-                        TshirtIndex = Index
-                        SetPedComponentVariation(PlayerPedId(), 8, TshirtIndex, TshirtIndex2, 2)
+                RageUI.List("T-Shirt:", TshirtFound, TshirtIndex, toReset, {}, true, function(Hovered, Active, Selected, Index)
+                    TshirtIndex = Index
+                    if Selected then 
+                        TshirtIndex = 0
+                        --SetPedComponentVariation(PlayerPedId(), 8, TshirtIndex, TshirtIndex2, 2)
                     end
                 end)
 
-                RageUI.List("Couleur:", TshirtColorFound, TshirtIndex2, nil, {}, true, function(Hovered, Active, Selected, Index)
-                    if Active then 
-                        TshirtIndex2 = Index
-                        SetPedComponentVariation(PlayerPedId(), 8, TshirtIndex, TshirtIndex2, 2)
+                RageUI.List("Couleur:", TshirtColorFound, TshirtIndex2, toReset, {}, true, function(Hovered, Active, Selected, Index)
+                    TshirtIndex2 = Index
+                    if Selected then 
+                        TshirtIndex2 = 0
+                        --SetPedComponentVariation(PlayerPedId(), 8, TshirtIndex, TshirtIndex2, 2)
                     end
                 end)
 
-                RageUI.List("Veste:", VesteFound, VesteIndex, nil, {}, true, function(Hovered, Active, Selected, Index)
-                    if Active then 
-                        VesteIndex = Index
+                RageUI.List("Veste:", VesteFound, VesteIndex, toReset, {}, true, function(Hovered, Active, Selected, Index)
+                    VesteIndex = Index
+                    if Selected then 
+                        VesteIndex = 0
                         
-                        SetPedComponentVariation(PlayerPedId(), 11, VesteIndex, VesteIndex2, 2)
+                        --SetPedComponentVariation(PlayerPedId(), 11, VesteIndex, VesteIndex2, 2)
                     end
                 end)
 
-                RageUI.List("Couleur:", VesteColorFound, VesteIndex2, nil, {}, true, function(Hovered, Active, Selected, Index)
-                    if Active then 
-                        VesteIndex2 = Index
-                        SetPedComponentVariation(PlayerPedId(), 11, VesteIndex, VesteIndex2, 2)
+                RageUI.List("Couleur:", VesteColorFound, VesteIndex2, toReset, {}, true, function(Hovered, Active, Selected, Index)
+                    VesteIndex2 = Index
+                    if Selected then 
+                        VesteIndex2 = 0
+                        --SetPedComponentVariation(PlayerPedId(), 11, VesteIndex, VesteIndex2, 2)
                     end
                 end)
 
-                RageUI.List("Bras:", ArmsFound, ArmsIndex, nil, {}, true, function(Hovered, Active, Selected, Index)
-                    if Active then 
-                        ArmsIndex = Index
-                        SetPedComponentVariation(PlayerPedId(), 3, ArmsIndex, 0, 2)
+                RageUI.List("Bras:", ArmsFound, ArmsIndex, toReset, {}, true, function(Hovered, Active, Selected, Index)
+                    ArmsIndex = Index
+                    if Selected then 
+                        ArmsIndex = 0
+                        --SetPedComponentVariation(PlayerPedId(), 3, ArmsIndex, 0, 2)
                     end
                 end)
 
@@ -344,6 +351,8 @@ local function initiCreator()
             end, function()    
             end, 1)
 
+            SetPedComponentVariation(PlayerPedId(), 4, PantalonIndex, PantalonIndex2, 2)
+            SetPedComponentVariation(PlayerPedId(), 6, ChaussureIndex, ChaussureIndex2, 2)
 
             RageUI.IsVisible(RMenu:Get("fox_creator",'fox_bas'),true,true,true,function()
                 RageUI.Separator("↓ ~b~Customisation ~s~↓")
@@ -358,31 +367,35 @@ local function initiCreator()
                 for i = 0 , GetNumberOfPedDrawableVariations(PlayerPedId(), 6), 1 do ChaussureFound[i] = i end
                 for i = 0 , GetNumberOfPedTextureVariations(PlayerPedId(), 6, ChaussureIndex), 1 do ChaussureColorFound[i] = i end
 
-                RageUI.List("Pantalon:", PantalonFound, PantalonIndex, nil, {}, true, function(Hovered, Active, Selected, Index)
-                    if Active then 
-                        PantalonIndex = Index
-                        SetPedComponentVariation(PlayerPedId(), 4, PantalonIndex, PantalonIndex2, 2)
+                RageUI.List("Pantalon:", PantalonFound, PantalonIndex, toReset, {}, true, function(Hovered, Active, Selected, Index)
+                    PantalonIndex = Index
+                    if Selected then 
+                        PantalonIndex = 0
+                        --SetPedComponentVariation(PlayerPedId(), 4, PantalonIndex, PantalonIndex2, 2)
                     end
                 end)
 
-                RageUI.List("Couleur:", PantalonColorFound, PantalonIndex2, nil, {}, true, function(Hovered, Active, Selected, Index)
-                    if Active then 
-                        PantalonIndex2 = Index
-                        SetPedComponentVariation(PlayerPedId(), 4, PantalonIndex, PantalonIndex2, 2)
+                RageUI.List("Couleur:", PantalonColorFound, PantalonIndex2, toReset, {}, true, function(Hovered, Active, Selected, Index)
+                    PantalonIndex2 = Index
+                    if Selected then 
+                        PantalonIndex2 = 0
+                        --SetPedComponentVariation(PlayerPedId(), 4, PantalonIndex, PantalonIndex2, 2)
                     end
                 end)
 
-                RageUI.List("Chaussures:", ChaussureFound, ChaussureIndex, nil, {}, true, function(Hovered, Active, Selected, Index)
-                    if Active then 
-                        ChaussureIndex = Index
-                        SetPedComponentVariation(PlayerPedId(), 6, ChaussureIndex, ChaussureIndex2, 2)
+                RageUI.List("Chaussures:", ChaussureFound, ChaussureIndex, toReset, {}, true, function(Hovered, Active, Selected, Index)
+                    ChaussureIndex = Index
+                    if Selected then 
+                        ChaussureIndex = 0
+                        --SetPedComponentVariation(PlayerPedId(), 6, ChaussureIndex, ChaussureIndex2, 2)
                     end
                 end)
 
-                RageUI.List("Couleur:", ChaussureColorFound, ChaussureIndex2, nil, {}, true, function(Hovered, Active, Selected, Index)
-                    if Active then 
-                        ChaussureIndex2 = Index
-                        SetPedComponentVariation(PlayerPedId(), 6, ChaussureIndex, ChaussureIndex2, 2)
+                RageUI.List("Couleur:", ChaussureColorFound, ChaussureIndex2, toReset, {}, true, function(Hovered, Active, Selected, Index)
+                    ChaussureIndex2 = Index
+                    if Selected then 
+                        ChaussureIndex2 = 0
+                        --SetPedComponentVariation(PlayerPedId(), 6, ChaussureIndex, ChaussureIndex2, 2)
                     end
                 end)
 
@@ -393,7 +406,13 @@ local function initiCreator()
             end, function()    
             end, 1)
 
-            
+            SetPedEyeColor(PlayerPedId(), OeilIndex, 0, 1)
+            SetPedComponentVariation(PlayerPedId(), 2, CheuveuxIndex, 1, 2)
+            SetPedHeadOverlay(PlayerPedId(), 1, BarbeIndex, 1 + 0.0)
+            SetPedHeadOverlayColor(PlayerPedId(), 1, 1, CouleurIndex, CouleurIndex)
+            SetPedHairColor(PlayerPedId(), CouleurIndex, CouleurIndex)
+		        
+
             RageUI.IsVisible(RMenu:Get("fox_creator",'fox_tete'),true,true,true,function()
                 RageUI.Separator("↓ ~b~Customisation ~s~↓")
 
@@ -407,33 +426,36 @@ local function initiCreator()
                 for i = 0 , GetNumHeadOverlayValues(1)-1, 1 do BarbeFound[i] = i end
                 for i = 0 , GetNumHairColors()-1 do CouleurFound[i] = i end
 
-                RageUI.List("Couleur des yeux:", OeilFound, OeilIndex, nil, {}, true, function(Hovered, Active, Selected, Index)
+                RageUI.List("Couleur des yeux:", OeilFound, OeilIndex, toReset, {}, true, function(Hovered, Active, Selected, Index)
                     OeilIndex = Index
-                    if Active then 
-                        SetPedEyeColor(PlayerPedId(), OeilIndex, 0, 1)
+                    if Selected then 
+                        Index = 0
+                        OeilIndex = 0
                     end
                 end)
 
-                RageUI.List("Cheveux:", CoiffureFound, CheuveuxIndex, nil, {}, true, function(Hovered, Active, Selected, Index)
+                RageUI.List("Cheveux:", CoiffureFound, CheuveuxIndex, toReset, {}, true, function(Hovered, Active, Selected, Index)
                     CheuveuxIndex = Index
-                    if Active then 
-                        SetPedComponentVariation(PlayerPedId(), 2, CheuveuxIndex, 1, 2)
+                    if Selected then 
+                        Index = 0
+                        CheuveuxIndex = 0
                     end
                 end)
 
-                RageUI.List("Barbe:", BarbeFound, BarbeIndex, nil, {}, true, function(Hovered, Active, Selected, Index)
+                RageUI.List("Barbe:", BarbeFound, BarbeIndex, toReset, {}, true, function(Hovered, Active, Selected, Index)
                     BarbeIndex = Index
-                    if Active then 
-                        SetPedHeadOverlay(PlayerPedId(), 1, BarbeIndex, 1 + 0.0)
-			            SetPedHeadOverlayColor(PlayerPedId(), 1, 1, CouleurIndex, CouleurIndex)
+                    if Selected then 
+                        Index = -1
+                        BarbeIndex = -1
                     end
+
                 end)
 
-                RageUI.List("Teinte:", CouleurFound, CouleurIndex, nil, {}, true, function(Hovered, Active, Selected, Index)
+                RageUI.List("Teinte:", CouleurFound, CouleurIndex, toReset, {}, true, function(Hovered, Active, Selected, Index)
                     CouleurIndex = Index
-                    if Active then 
-                        SetPedHairColor(PlayerPedId(), CouleurIndex, CouleurIndex)
-		                SetPedHeadOverlayColor(PlayerPedId(), 1, 1, CouleurIndex, CouleurIndex)
+                    if Selected then 
+                        Index = 0
+                        CouleurIndex = 0
                     end
                 end)
 
