@@ -12,7 +12,11 @@ end
 
 Fox.sync.forceTime = function(ho,mi)
     overrideLocalTime = {h = ho, m = mi}
-    NetworkOverrideClockTime(overrideLocalTime.h, overrideLocalTime.m, 0)
+    if overrideLocalTime.h == nil then
+        NetworkOverrideClockTime(h, m, 0)
+    else 
+        NetworkOverrideClockTime(overrideLocalTime.h, overrideLocalTime.m, 0)
+    end
 end
 
 RegisterNetEvent("fox:sync:time")

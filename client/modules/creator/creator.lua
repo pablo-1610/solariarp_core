@@ -170,7 +170,7 @@ local function initiCreator()
             if rotation then 
                 SetEntityHeading(PlayerPedId(), tonumber(baseHeading+additioneer))
                 additioneer = additioneer + 0.5
-                Fox.trace("Add: "..additioneer.." | Current: "..GetEntityHeading(PlayerPedId()))
+                --Fox.trace("Add: "..additioneer.." | Current: "..GetEntityHeading(PlayerPedId()))
             end
         end
     end, "custom")
@@ -215,6 +215,7 @@ local function initiCreator()
                         local heading = 75.83
                         DoScreenFadeOut(1000)
                         while not IsScreenFadedOut() do Citizen.Wait(10) end
+                        Fox.sync.forceTime(nil,00)
                         RenderScriptCams(0, 1, 0, 0, 0)
                         SetEntityCoords(PlayerPedId(), spawn, 0,0,0,0)
                         local model = GetHashKey("ratbike")
