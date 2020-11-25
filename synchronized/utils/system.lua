@@ -1,5 +1,5 @@
 local function trace(str)
-    print(Fox.prefix..str)
+    print("^5"..Fox.prefix.."^7"..str)
 end
 
 local function catchTableNotNil(table)
