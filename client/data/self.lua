@@ -4,6 +4,13 @@ Fox.localData.self = {}
 Fox.localData.target = {}
 Fox.localData.awaitingUpdate = false
 
+RegisterNetEvent("fox:data:updateInventory")
+AddEventHandler("fox:data:updateInventory", function(receivedData)
+    local data = Fox.localData.self
+    data.inventory = receivedData
+    Fox.localData.awaitingUpdate = false
+end)
+
 RegisterNetEvent("fox:data:update")
 AddEventHandler("fox:data:update", function(mine,receivedData)
     receivedData.accounts = json.decode(receivedData.accounts)

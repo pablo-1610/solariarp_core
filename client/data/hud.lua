@@ -42,7 +42,8 @@ local function initialize()
             if shouldBeDisplayed then
                 drawText2D(hudMargin, hudTop, "Argent: ~g~"..Fox.localData.self.accounts["cash"].."$", 0.55)
                 drawText2D(hudMargin, hudTop+(1*hudSpace), "Banque: ~b~"..Fox.localData.self.accounts["bank"].."$", 0.55)       
-                drawText2D(hudMargin, hudTop+(2*hudSpace), "Sale: ~r~"..Fox.localData.self.accounts["black"].."$", 0.55)                  
+                drawText2D(hudMargin, hudTop+(2*hudSpace), "Sale: ~r~"..Fox.localData.self.accounts["black"].."$", 0.55)      
+                drawText2D(hudMargin, hudTop+(3*hudSpace), "Sac: ~o~"..Fox.localData.self.inventory.currentWeight.."~s~/~y~"..Fox.localData.self.inventory.weight.."kg", 0.55)              
             end
             Citizen.Wait(1)
         end

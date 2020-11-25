@@ -239,7 +239,7 @@ AddEventHandler("fox:creator:callback", function(existing)
     SetPedHeadOverlayColor(PlayerPedId(), 1, 1, tenue.CouleurIndex, tenue.CouleurIndex)
 
 
-    TriggerServerEvent("fox:data:addPlayer", existing)
+    --TriggerServerEvent("fox:data:addPlayer", existing)
     Citizen.SetTimeout(1000, function()
         TriggerServerEvent("fox:data:request")
     end)

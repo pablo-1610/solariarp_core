@@ -59,7 +59,7 @@ local function removeMoney(source,account,ammount)
 end
 Fox.playersHandler.removeMoney = removeMoney
 
-local function getLicense(source)
+function getLicense(source)
 	local steamid  = false
     local license  = false
     local discord  = false
@@ -95,8 +95,23 @@ AddEventHandler("fox:data:addPlayer", function(infos)
     addPlayer(source,returnedInfos)
 end)
 
+
 RegisterNetEvent("fox:data:request")
 AddEventHandler("fox:data:request", function()
-    if not Fox.players[source] then return end
-    TriggerClientEvent("fox:data:update", source, true, Fox.players[source])
+    local _src = source
+    if not Fox.players[_src] then 
+        Fox.trace("^1[PLAYERS] ^7"..GetPlayerName(_src).." tryied to get player but doesnt exists")
+        return 
+    end
+    local l = getLicense(_src)
+    while l == nil do Citizen.Wait(10) end
+    Fox.players[_src].inventory = getPlayerInventory(_src)
+    while not Fox.players[_src].inventory do Citizen.Wait(10) end
+    TriggerClientEvent("fox:data:update", _src, true, Fox.players[_src])
 end)
+
+AddEventHandler('playerDropped', function (reason)
+    local _src = source
+    Fox.trace("^1[PLAYERS] ^7"..GetPlayerName(_src).." disconnected: ^3"..reason.."^7")
+    Fox.players[_src] = nil
+  end)

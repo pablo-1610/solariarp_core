@@ -49,6 +49,7 @@ local function initiCreator()
     while not HasModelLoaded(modcu) do Citizen.Wait(10) end
     local hair = CreatePed(9, modcu, 682.91, 571.01, 130.46, 246.72, false, false)
     createdLights[450] = hair
+    SetBlockingOfNonTemporaryEvents(hair, true)
     TaskStartScenarioInPlace(hair, "WORLD_HUMAN_CLIPBOARD", 0, false)
 
     
@@ -210,6 +211,36 @@ local function initiCreator()
 				        	ChaussureIndex2 = ChaussureIndex2
 				        }
                         TriggerServerEvent("fox:creator:create", PlySkin,infos,GetEntityCoords(PlayerPedId()))
+                        local spawn = vector3(648.166, 590.63, 128.91)
+                        local heading = 75.83
+                        DoScreenFadeOut(1000)
+                        while not IsScreenFadedOut() do Citizen.Wait(10) end
+                        RenderScriptCams(0, 1, 0, 0, 0)
+                        SetEntityCoords(PlayerPedId(), spawn, 0,0,0,0)
+                        local model = GetHashKey("ratbike")
+                        RequestModel(model)
+                        while not HasModelLoaded(model) do Citizen.Wait(10) end
+                        local bike = CreateVehicle(model, spawn,heading, true, false)
+                        SetModelAsNoLongerNeeded(model)
+                        SetVehicleEngineOn(bike, true, true, false)
+                        TaskWarpPedIntoVehicle(PlayerPedId(), bike, -1)
+                        blockControls = false
+                        DoScreenFadeIn(1000)
+                        
+                        FreezeEntityPosition(PlayerPedId(), false)
+                        NetworkSetFriendlyFireOption(true)
+                        SetCanAttackFriendly(PlayerPedId(), true, true)
+                        DisplayRadar(true)
+                        for v in EnumeratePeds() do
+                            if v ~= PlayerPedId() then
+                                ResetEntityAlpha(v)
+                                SetEntityNoCollisionEntity(v, pPed, true)
+                                NetworkConcealPlayer(NetworkGetPlayerIndexFromPed(v), false, 1)
+                                SetEntityVisible(v, true, 0)
+                            end
+                        end
+                        Citizen.Wait(1200)
+                        TriggerServerEvent("fox:data:request")
                     end
                  end)
 
