@@ -36,7 +36,7 @@ local hudSpace = 0.028
 
 
 local function initialize()
-
+    --[[
     Fox.thread.tick(function()
         while true do
             if shouldBeDisplayed then
@@ -48,6 +48,7 @@ local function initialize()
             Citizen.Wait(1)
         end
     end, "hud")
+    --]]
 end
 Fox.hud.init = initialize
 

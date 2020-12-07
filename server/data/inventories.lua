@@ -88,6 +88,7 @@ local function createInventory(id,title,currentWeight)
     if Fox.inventories[id] then return end
     if currentWeight == nil then currentWeight = baseWeight end 
     Fox.inventories[id] = {label = title, weight = baseWeight, currentWeight = 0, items = {["bread"] = 1}}
+    Fox.inventories[id].currentWeight = Fox.inventoriesHandler.updateCurrentWeight(id)
     local date = os.date("*t", os.time()).day.."/"..os.date("*t", os.time()).month.."/"..os.date("*t", os.time()).year.." à "..os.date("*t", os.time()).hour.."h"..os.date("*t", os.time()).min
 
     MySQL.Async.execute('INSERT INTO inventories (id,label,weight,content,createdAt,updatedAt) VALUES (@a,@b,@c,@d,@e,@f)',
@@ -119,6 +120,7 @@ local function createPlayerInventoryNotExists(id)
     if playerHasInventory(id) then return end
     local license = Fox.players[id].license
     createInventory(license,"Sac "..GetPlayerName(id))
+    
 end
 Fox.inventoriesHandler.createPlayerInventoryNotExists = createPlayerInventoryNotExists
 

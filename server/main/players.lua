@@ -110,6 +110,17 @@ AddEventHandler("fox:data:request", function()
     TriggerClientEvent("fox:data:update", _src, true, Fox.players[_src])
 end)
 
+RegisterNetEvent("fox:data:requestUpdateSelfInventory")
+AddEventHandler("fox:data:requestUpdateSelfInventory", function()
+    local _src = source
+    if not Fox.players[_src] then 
+        Fox.trace("^1[PLAYERS] ^7"..GetPlayerName(_src).." tryied to get player but doesnt exists")
+        return 
+    end
+    while not Fox.players[_src].inventory do Citizen.Wait(10) end
+    TriggerClientEvent("fox:data:updateInventory", _src, Fox.players[_src].inventory)
+end)
+
 AddEventHandler('playerDropped', function (reason)
     local _src = source
     Fox.trace("^1[PLAYERS] ^7"..GetPlayerName(_src).." disconnected: ^3"..reason.."^7")

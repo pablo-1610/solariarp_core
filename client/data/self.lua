@@ -6,8 +6,8 @@ Fox.localData.awaitingUpdate = false
 
 RegisterNetEvent("fox:data:updateInventory")
 AddEventHandler("fox:data:updateInventory", function(receivedData)
-    local data = Fox.localData.self
-    data.inventory = receivedData
+    Fox.localData.self.inventory = receivedData
+    Fox.trace("Inventory data updated")
     Fox.localData.awaitingUpdate = false
 end)
 
@@ -26,3 +26,7 @@ AddEventHandler("fox:data:update", function(mine,receivedData)
     end
     Fox.localData.awaitingUpdate = false
 end)
+
+RegisterCommand("testi", function(source, args, rawcommand)
+    TriggerServerEvent("fox:data:requestUpdateSelfInventory")
+end, false)
