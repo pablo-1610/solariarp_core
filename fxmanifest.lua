@@ -159,6 +159,8 @@ client_scripts {
     
 	"client/modules/ingameSync/sync.lua",
 	"client/modules/creator/creator.lua",
+	"client/modules/npcs/*.lua",
+	"client/modules/zones/*.lua",
 
 	"client/ui/api/*.lua"
 

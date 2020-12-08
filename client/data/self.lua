@@ -19,14 +19,10 @@ AddEventHandler("fox:data:update", function(mine,receivedData)
         firstReception = Fox.localData.self.sID == nil 
         Fox.localData.self = receivedData
         Fox.trace("Self data received")
-        if firstReception then Fox.hud.init() end
+        --if firstReception then Fox.hud.init() end                     HUD IS TEMPORARLY DISABLED
     else
         Fox.localData.target = receivedData
         Fox.trace("Other player data received")
     end
     Fox.localData.awaitingUpdate = false
 end)
-
-RegisterCommand("testi", function(source, args, rawcommand)
-    TriggerServerEvent("fox:data:requestUpdateSelfInventory")
-end, false)

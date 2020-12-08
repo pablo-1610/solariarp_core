@@ -141,6 +141,8 @@ local function initiCreator()
     local infos = {first = "", last = "", age = ""}
     local err = nil
 
+    
+
     RageUI.Visible(RMenu:Get("fox_creator",'fox_creator_main'), true)
 
     local vars = {
@@ -228,6 +230,7 @@ local function initiCreator()
                         SetModelAsNoLongerNeeded(model)
                         SetVehicleEngineOn(bike, true, true, false)
                         TaskWarpPedIntoVehicle(PlayerPedId(), bike, -1)
+                        local npc, uniqueID = Fox.npcs.create("csb_prologuedriver", true, true, nil, "WORLD_HUMAN_CLIPBOARD", 633.169, 596.184, 128.91, 250.0, true, true)
                         blockControls = false
                         while getVolume("creator") > 0.0 do
                             setVolume("creator", getVolume("creator") - 0.01)
@@ -250,6 +253,11 @@ local function initiCreator()
                         end
                         Citizen.Wait(1200)
                         TriggerServerEvent("fox:data:request")
+                        RMenu:Delete('fox_creator', 'fox_creator_main')
+                        RMenu:Delete('fox_creator', 'fox_identity')
+                        for k,v in pairs(vars) do
+                            RMenu:Delete('fox_creator', 'fox_'..v.menuDest)
+                        end
                     end
                  end)
 
