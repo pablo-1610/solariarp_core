@@ -1,0 +1,2 @@
+Fox = {}
+Fox.prefix = "[Fox] "
