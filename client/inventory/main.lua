@@ -13,7 +13,7 @@ Fox.utils.openSelfInventory = function()
     items = {}
     display = true
     RageUI.CloseAll()
-    RMenu.Add('fox_inv_self', 'fox_inv_self_main', RageUI.CreateMenu(nil, "~b~Inventaire personnel", nil, nil, "root_cause" , "shopui_title_lifeinvader"))
+    RMenu.Add('fox_inv_self', 'fox_inv_self_main', RageUI.CreateMenu(nil, "~b~Inventaire personnel", nil, nil, "root_cause" , "yougoutoucou"))
     RMenu:Get("fox_inv_self", "fox_inv_self_main").Closed = function()end
     RMenu:Get("fox_inv_self", "fox_inv_self_main").Closable = true
 
@@ -32,8 +32,21 @@ Fox.utils.openSelfInventory = function()
                 for item,qty in pairs(Fox.localData.self.inventory.items) do
                     RageUI.ButtonWithStyle("~b~"..ITEM_ACTIONS[item].display.." ~s~(~b~"..qty.."~s~)",nil, {RightLabel = "→→"}, true, function(_,_,s) if s then selectedItem = item end end, RMenu:Get("fox_inv_self","fox_inv_self_itemprecise"))
                 end
-            end, function()   
-            end, 1)
+            end, function()  
+                zz = 0.5
+                RageUI.PercentagePanel(zz, "Percentage", nil, nil, function(Hovered, Active, Percent)
+                    if (Active) then
+        
+                    end
+                    zz = Percent
+                end, 2)
+                RageUI.PercentagePanel(zz, "Percentage", nil, nil, function(Hovered, Active, Percent)
+                    if (Active) then
+        
+                    end
+                    zz = Percent
+                end, 1)
+            end)
 
             RageUI.IsVisible(RMenu:Get("fox_inv_self",'fox_inv_self_itemprecise'),true,true,true,function()
                 shouldEverBeOpened = true
@@ -51,7 +64,8 @@ Fox.utils.openSelfInventory = function()
                 RageUI.ButtonWithStyle("~b~Donner",nil, {RightLabel = "→→"}, canInteract, function(_,_,s) end)
                 RageUI.ButtonWithStyle("~b~Jeter",nil, {RightLabel = "→→"}, canInteract, function(_,_,s) end)
             end, function()   
-            end, 1)
+
+            end)
 
             
 
