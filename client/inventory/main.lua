@@ -58,7 +58,7 @@ Fox.utils.openSelfInventory = function()
                     RageUI.Separator("~b~Poids: ~s~"..round(Fox.localData.self.inventory.currentWeight).."~b~/~s~"..round(Fox.localData.self.inventory.weight).."kg")
                     for item,qty in pairs(Fox.localData.self.inventory.items) do
                         total = total + 1
-                        RageUI.ButtonWithStyle("~b~"..ITEM_ACTIONS[item].display.." ~s~(~b~"..qty.."~s~)","~b~Description: ~s~"..ITEM_ACTIONS[item].description, {RightLabel = "→→"}, true, function(_,a,s) if s then selectedItem = item end if a then selectedObject = item end  end, RMenu:Get("fox_inv_self","fox_inv_self_itemprecise"))
+                        RageUI.ButtonWithStyle("~b~"..ITEM_ACTIONS[item].display.." ~s~(~b~x"..qty.."~s~)","~b~Description: ~s~"..ITEM_ACTIONS[item].description, {RightLabel = "→→"}, true, function(_,a,s) if s then selectedItem = item end if a then selectedObject = item end  end, RMenu:Get("fox_inv_self","fox_inv_self_itemprecise"))
                     end
                     if (total-1) <= 0 then RageUI.Separator("") RageUI.Separator("~r~Oups ! Il semblerait que vous n'ayez rien") RageUI.Separator("~r~dans votre inventaire, il faudrait songer à") RageUI.Separator("~r~faire des courses.. et rapidement :/") RageUI.Separator("") end
                 else
