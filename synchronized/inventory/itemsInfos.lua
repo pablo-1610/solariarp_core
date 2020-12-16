@@ -5,6 +5,14 @@ ITEM_ACTIONS = {
         category = ITEMS_CAT.FOOD,
         args = {target = "hunger"},
         use = ITEMS_CAT_USE[category]
+    },
+
+    [ITEM_LIST.WATER] = {
+        display = "Bouteille d'eau",
+        weight = 0.35,
+        category = ITEMS_CAT.FOOD,
+        args = {target = "thirst"},
+        use = ITEMS_CAT_USE[category]
     }
 }
 

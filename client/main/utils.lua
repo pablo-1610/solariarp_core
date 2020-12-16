@@ -14,3 +14,32 @@ local function forgetModel(model)
     SetModelAsNoLongerNeeded(hash)
 end
 Fox.clientutils.forgetModel = forgetModel
+
+local function getClosestPlayer()
+	local players = GetActivePlayers()
+	local coords = GetEntityCoords(pPed)
+	local pCloset = nil
+	local pClosetPos = nil
+	local pClosetDst = nil
+	for k,v in pairs(players) do
+		if GetPlayerPed(v) ~= pPed then
+			local oPed = GetPlayerPed(v)
+			local oCoords = GetEntityCoords(oPed)
+			local dst = GetDistanceBetweenCoords(oCoords, coords, true)
+			if pCloset == nil then
+				pCloset = v
+				pClosetPos = oCoords
+				pClosetDst = dst
+			else
+				if dst < pClosetDst then
+					pCloset = v
+					pClosetPos = oCoords
+					pClosetDst = dst
+				end
+			end
+		end
+	end
+
+	return pCloset, pClosetDst
+end
+Fox.clientutils.getClosestPlayer = getClosestPlayer

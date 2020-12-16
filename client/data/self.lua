@@ -19,7 +19,7 @@ AddEventHandler("fox:data:update", function(mine,receivedData)
         firstReception = Fox.localData.self.sID == nil 
         Fox.localData.self = receivedData
         Fox.trace("Self data received")
-        --if firstReception then Fox.hud.init() end                     HUD IS TEMPORARLY DISABLED
+        if firstReception then Fox.keybinds.createBinds() end                     
     else
         Fox.localData.target = receivedData
         Fox.trace("Other player data received")
