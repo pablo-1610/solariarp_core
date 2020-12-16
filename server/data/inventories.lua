@@ -270,10 +270,30 @@ local function transfer(from,to,item,qty)
     end
 end
 
+local antiSpam = {}
+local antiSpamBlock = {}
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(1200)
+        for k,v in pairs(antiSpam) do
+            if not antiSpamBlock[k] then antiSpam[k] = nil else antiSpamBlock[k] = nil end
+        end
+    end
+end)
+
+local function antiSpamPlayer(_src)
+    if not antiSpam[_src] then antiSpam[_src] = 0 end
+    antiSpam[_src] = antiSpam[_src] + 1
+    if antiSpam[_src] >= 3 then antiSpamBlock[_src] = true Fox.trace("^1{FOXY} ^1/!\\ ^7Spam detection (\"^3Inventory^7\") for ^1"..GetPlayerName(_src).." ^7: ^1Violation: "..antiSpam[_src].." VL ^7!") TriggerClientEvent("fox:inv:alert", _src, "Action refusée: Maximum 3 reqûetes/secondes.") return false end
+    return true
+end
+
 RegisterNetEvent("fox:inv:use")
 AddEventHandler("fox:inv:use", function(item)
     local _src = source
     local license = getLicense(_src)
+    if not antiSpamPlayer(_src) then return end
     local success = forceRemove(license,item,1)
     while not success do Wait(1) end
     Fox.players[_src].inventory = getInventory(license)
@@ -285,6 +305,7 @@ RegisterNetEvent("fox:inv:trash")
 AddEventHandler("fox:inv:trash", function(item)
     local _src = source
     local license = getLicense(_src)
+    if not antiSpamPlayer(_src) then return end
     local success = forceRemove(license,item,1)
     while not success do Wait(1) end
     Fox.players[_src].inventory = getInventory(license)

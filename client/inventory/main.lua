@@ -1,6 +1,7 @@
 local display = false
 local act = false
 local viewWeight = false
+local alert = ""
 local state = 0
 local items = {}
 
@@ -22,6 +23,7 @@ end
 
 Fox.utils.openSelfInventory = function()
     if display then return end
+    alert = ""
     local selectedItem,point,variator = nil,"","~y~"
     items = {}
     display = true
@@ -51,6 +53,7 @@ Fox.utils.openSelfInventory = function()
             RageUI.IsVisible(RMenu:Get("fox_inv_self",'fox_inv_self_main'),true,true,true,function()
                 shouldEverBeOpened = true
                 if not act then 
+                    if alert ~= "" then RageUI.Separator(variator..alert) end
                     RageUI.Checkbox("Visualisation du poids", nil, viewWeight, { Style = RageUI.CheckboxStyle.Tick }, function(Hovered, Selected, Active, Checked) viewWeight = Checked; end, function() viewWeight = true end, function() viewWeight = false end)
                     RageUI.Separator("~b~Poids: ~s~"..round(Fox.localData.self.inventory.currentWeight).."~b~/~s~"..round(Fox.localData.self.inventory.weight).."kg")
                     for item,qty in pairs(Fox.localData.self.inventory.items) do
@@ -86,6 +89,7 @@ Fox.utils.openSelfInventory = function()
                     if not selectedItem or not Fox.localData.self.inventory.items[selectedItem] then Fox.trace("^1No more item of this type, returning to inv main") RageUI.GoBack() else
                         local closet, dst = Fox.clientutils.getClosestPlayer(GetEntityCoords(PlayerPedId()))
                         if closet == nil or dst == nil or dst >= 2.1 then canInteract = false else canInteract = true end
+                        if alert ~= "" then RageUI.Separator(variator..alert) end
                         RageUI.Separator("~b~Poids: ~s~"..round(Fox.localData.self.inventory.currentWeight).."~b~/~s~"..round(Fox.localData.self.inventory.weight).."kg")
                         RageUI.Separator("~b~Sélection: ~s~"..ITEM_ACTIONS[selectedItem].display.." (~b~x"..Fox.localData.self.inventory.items[selectedItem].."~s~)")
                         --[[RageUI.Separator("↓ ~b~Informations ~s~↓")
@@ -124,9 +128,16 @@ end
 
 RegisterNetEvent("fox:inv:useBack")
 AddEventHandler("fox:inv:useBack", function(item)
+    alert = ""
     act = false
     ITEMS_CAT_USE[ITEM_ACTIONS[item].category](ITEM_ACTIONS[item].args)
 end)
 
+RegisterNetEvent("fox:inv:alert")
+AddEventHandler("fox:inv:alert", function(str)
+    act = false
+    alert = str
+end)
+
 RegisterNetEvent("fox:inv:trashBack")
-AddEventHandler("fox:inv:trashBack", function(item) act = false end)
+AddEventHandler("fox:inv:trashBack", function(item) alert = "" act = false end)
