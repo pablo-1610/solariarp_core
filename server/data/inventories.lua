@@ -181,7 +181,7 @@ local function forceAdd(id,item,qty)
     local newWeight = updateCurrentWeight(id)
     
     Fox.inventories[id].currentWeight = newWeight
-    Fox.trace("^3[INV] ^2[ADD] ^7Adding items in inventory ^3\""..inventory.label.."\"^2 ——[+]——> ^3"..ITEM_ACTIONS[item].display.." x "..qty.."^7, Now weight = ^3"..round(newWeight).."^7kg")
+    Fox.trace("^3[INV] ^2[ADD] ^7Adding items in inventory ^3\""..inventory.label.."\"^2 --[+]--> ^3"..ITEM_ACTIONS[item].display.." x "..qty.."^7, Now weight = ^3"..round(newWeight).."^7kg")
     performUpdate(id)
     return true
 end
@@ -219,7 +219,7 @@ local function forceRemove(id,item,qty)
     local newWeight = updateCurrentWeight(id)
     
     Fox.inventories[id].currentWeight = newWeight
-    Fox.trace("^3[INV] ^1[RMV] ^7Removing items from inventory ^3\""..inventory.label.."\"^1 ——[-]——> ^3"..ITEM_ACTIONS[item].display.." x "..qty.."^7, Now weight = ^3"..round(newWeight).."^7kg")
+    Fox.trace("^3[INV] ^1[RMV] ^7Removing items from inventory ^3\""..inventory.label.."\"^1 --[-]--> ^3"..ITEM_ACTIONS[item].display.." x "..qty.."^7, Now weight = ^3"..round(newWeight).."^7kg")
     performUpdate(id)
     return true
 end
@@ -270,3 +270,24 @@ local function transfer(from,to,item,qty)
     end
 end
 
+RegisterNetEvent("fox:inv:use")
+AddEventHandler("fox:inv:use", function(item)
+    local _src = source
+    local license = getLicense(_src)
+    local success = forceRemove(license,item,1)
+    while not success do Wait(1) end
+    Fox.players[_src].inventory = getInventory(license)
+    TriggerClientEvent("fox:data:updateInventory", _src, Fox.players[_src].inventory)
+    TriggerClientEvent("fox:inv:useBack", _src, item)
+end)
+
+RegisterNetEvent("fox:inv:trash")
+AddEventHandler("fox:inv:trash", function(item)
+    local _src = source
+    local license = getLicense(_src)
+    local success = forceRemove(license,item,1)
+    while not success do Wait(1) end
+    Fox.players[_src].inventory = getInventory(license)
+    TriggerClientEvent("fox:data:updateInventory", _src, Fox.players[_src].inventory)
+    TriggerClientEvent("fox:inv:trashBack", _src, item)
+end)
