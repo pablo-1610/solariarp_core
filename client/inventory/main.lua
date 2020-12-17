@@ -93,29 +93,18 @@ Fox.utils.openSelfInventory = function()
                             local coOther = GetEntityCoords(GetPlayerPed(closet))
                             local coPerso = GetEntityCoords(PlayerPedId())
                             local distance = GetDistanceBetweenCoords(coOther, coPerso, 1)
-                            if distance < 5.0 then 
+                            if distance < 3.0 then 
                                 canInteract = true 
-                                if GetPlayerPed(closet) == PlayerPedId() then canInteract = false end
                             end 
                             
                         end
                         if alert ~= "" then RageUI.Separator(variator..alert) end
                         RageUI.Separator("~b~Poids: ~s~"..round(Fox.localData.self.inventory.currentWeight).."~b~/~s~"..round(Fox.localData.self.inventory.weight).."kg")
                         RageUI.Separator("~b~Sélection: ~s~"..ITEM_ACTIONS[selectedItem].display.." (~b~x"..Fox.localData.self.inventory.items[selectedItem].."~s~)")
-                        --[[RageUI.Separator("↓ ~b~Informations ~s~↓")
-                        RageUI.ButtonWithStyle("~b~Quantité: ~s~"..Fox.localData.self.inventory.items[selectedItem],nil, {}, true, function(_,_,s) end)
-                        RageUI.ButtonWithStyle("~b~Poids unitaire: ~s~"..round(ITEM_ACTIONS[selectedItem].weight).."kg",nil, {}, true, function(_,_,s) end)
-                        RageUI.ButtonWithStyle("~b~Poids occupé: ~s~"..round(ITEM_ACTIONS[selectedItem].weight*Fox.localData.self.inventory.items[selectedItem]).."kg",nil, {}, true, function(_,_,s) end)
-                        --]]
                         RageUI.Separator("↓ ~b~Actions ~s~↓")
                         RageUI.ButtonWithStyle("~b~Utiliser",byState(2,ITEMS_CAT_USE[ITEM_ACTIONS[selectedItem].category] ~= nil),{RightLabel = "→→"}, ITEMS_CAT_USE[ITEM_ACTIONS[selectedItem].category] ~= nil, function(_,_,s) if s then act = true TriggerServerEvent("fox:inv:use", selectedItem) end end)
-                        
-                        
-                        --RageUI.ButtonWithStyle("~b~Jeter","~b~Jeter X objets de ce type", {RightLabel = "→→"}, true, function(_,_,s) if s then act = true TriggerServerEvent("fox:inv:trash", selectedItem) end end)
                         local trashList = {}
-                        for i = 1,tonumber(Fox.localData.self.inventory.items[selectedItem]) do
-                            trashList[i] = "~r~Jeter "..i.."~s~"
-                        end
+                        for i = 1,tonumber(Fox.localData.self.inventory.items[selectedItem]) do trashList[i] = "~r~Jeter "..i.."~s~" end
                         if totrash > Fox.localData.self.inventory.items[selectedItem] then totrash = 1 end
 
                         RageUI.List("~b~Jeter", trashList, totrash, nil, {}, true, function(Hovered, Active, Selected, Index)
@@ -136,17 +125,12 @@ Fox.utils.openSelfInventory = function()
                                 local cCoords = GetEntityCoords(GetPlayerPed(closet))
                                 DrawMarker(20, cCoords.x, cCoords.y, cCoords.z+1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3, 0.3, 0.3, 255, 255, 255, 170, 0, 1, 2, 0, nil, nil, 0)
                             end
-                            if Selected then
-                                
+                            if Selected and canInteract then
+                
+                                act = true TriggerServerEvent("fox:inv:giveToPlayer", GetPlayerServerId(closet),selectedItem,totrash)
                             end
                             totrash = Index
                         end)
-                        
-
-                        
-                        
-                        --RageUI.ButtonWithStyle("~b~Donner",byState(1,canInteract), {RightLabel = "→→"}, canInteract, function(_,_,s) end)
-                        
                     end
                 else
                     RageUI.Separator("")
@@ -186,3 +170,16 @@ end)
 
 RegisterNetEvent("fox:inv:trashBack")
 AddEventHandler("fox:inv:trashBack", function(item) alert = "" act = false end)
+
+
+
+RegisterNetEvent("fox:inv:giveBack")
+AddEventHandler("fox:inv:giveBack", function(item,qty,target)
+    alert = "" act = false 
+    Fox.clientutils.advancedNotif("Inventaire","~r~Don d'objet","Vous avez donné ~y~"..qty.." "..ITEM_ACTIONS[item].display.." ~s~à ~b~"..target,"CHAR_MILSITE",2)
+end)
+
+RegisterNetEvent("fox:inv:receive")
+AddEventHandler("fox:inv:receive", function(item,qty,target)
+    Fox.clientutils.advancedNotif("Inventaire","~r~Récéption d'objet","Vous avez reçu ~y~"..qty.." "..ITEM_ACTIONS[item].display.." ~s~de la part de ~b~"..target,"CHAR_MILSITE",2)
+end)

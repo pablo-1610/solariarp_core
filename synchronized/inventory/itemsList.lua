@@ -1,4 +1,5 @@
 ITEM_LIST = {
     BREAD = "bread",
-    WATER = "water"
+    WATER = "water",
+    D = "dildot"
 }

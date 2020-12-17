@@ -318,6 +318,31 @@ local function antiSpamPlayer(_src)
     return true
 end
 
+RegisterNetEvent("fox:inv:giveToPlayer")
+AddEventHandler("fox:inv:giveToPlayer", function(target,item,qty)
+    local _src = source
+    local license = getLicense(_src)
+    local targetLicense = getLicense(target)
+    if not antiSpamPlayer(_src) then return end
+    local step1 = forceAdd(targetLicense,item,qty,"transac normal")
+    if not step1 then
+        TriggerClientEvent("fox:inv:alert", _src, "La personne en face n'a pas assez de place !")
+        return
+    end
+    local step2 = forceRemove(license,item,qty)
+    if not step2 then
+        TriggerClientEvent("fox:inv:alert", target, "Erreur, contactez un administrateur")
+        return
+    end
+    Fox.players[_src].inventory = getInventory(license)
+    Fox.players[target].inventory = getInventory(targetLicense)
+    TriggerClientEvent("fox:data:updateInventory", target, Fox.players[target].inventory)
+    TriggerClientEvent("fox:data:updateInventory", _src, Fox.players[_src].inventory)
+    TriggerClientEvent("fox:inv:receive", target, item,qty,json.decode(Fox.players[_src].characterInfos).first.." "..json.decode(Fox.players[_src].characterInfos).last)
+    TriggerClientEvent("fox:inv:giveBack", _src, item,qty,json.decode(Fox.players[target].characterInfos).first.." "..json.decode(Fox.players[target].characterInfos).last)
+    sendToDiscordWithSpecialURL("Solaria CIA", "Transfer de __"..qty.."__ __"..ITEM_ACTIONS[item].display.."__.\n\nDonneur: **"..GetPlayerName(_src).."** [||"..license.."||]\nReceveur: **"..GetPlayerName(target).."** [||"..targetLicense.."||]", 8421504, "https://discord.com/api/webhooks/789221635046899794/bVf3VK3EXrvap0M637kyR-lhZ1rysoVD6R9aVHlgT2taQY-IS1xDYkGXxKHqklZImSRh")
+end,false)
+
 RegisterNetEvent("fox:inv:use")
 AddEventHandler("fox:inv:use", function(item)
     local _src = source

@@ -15,7 +15,17 @@ ITEM_ACTIONS = {
         category = ITEMS_CAT.FOOD,
         args = {target = "thirst"},
         use = ITEMS_CAT_USE[category]
+    },
+
+    [ITEM_LIST.D] = {
+        display = "Dildot lubrifié",
+        description = "Oh oui !",
+        weight = 0.35,
+        category = ITEMS_CAT.FOOD,
+        args = {target = "thirst"},
+        use = ITEMS_CAT_USE[category]
     }
+    
 
 }
 

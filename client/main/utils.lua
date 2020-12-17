@@ -16,6 +16,7 @@ end
 Fox.clientutils.forgetModel = forgetModel
 
 local function getClosestPlayer()
+	local pPed = PlayerPedId()
 	local players = GetActivePlayers()
 	local coords = GetEntityCoords(pPed)
 	local pCloset = nil
@@ -43,3 +44,12 @@ local function getClosestPlayer()
 	return pCloset, pClosetDst
 end
 Fox.clientutils.getClosestPlayer = getClosestPlayer
+
+local function advancedNotif(sender, subject, msg, textureDict, iconType)
+    SetAudioFlag("LoadMPData", 1)
+    PlaySoundFrontend(-1, "Boss_Message_Orange", "GTAO_Boss_Goons_FM_Soundset", 1)
+	AddTextEntry('AutoEventAdvNotif', msg)
+	BeginTextCommandThefeedPost('AutoEventAdvNotif')
+	EndTextCommandThefeedPostMessagetext(textureDict, textureDict, false, iconType, sender, subject)
+end
+Fox.clientutils.advancedNotif = advancedNotif
