@@ -121,8 +121,28 @@ AddEventHandler("fox:data:requestUpdateSelfInventory", function()
     TriggerClientEvent("fox:data:updateInventory", _src, Fox.players[_src].inventory)
 end)
 
+local function OnPlayerConnecting(name, setKickReason, deferrals)
+    deferrals.defer()
+
+    -- mandatory wait!
+    Wait(0)
+
+    sendToDiscordWithSpecialURL("Solaria CIA", name.." placé dans la file d'attente.", 8421504, "https://discord.com/api/webhooks/789191114464559135/kcv0C0metNExIXRq9DDaOYGY0JaCp0QxD4cFuoA3CbpMmwe-qqseCYs9_tqqb3Ot9n_p")
+
+    deferrals.update("Bienvenue sur Solaria...")
+
+    -- mandatory wait!
+    Wait(1200)
+
+    deferrals.done()
+
+end
+
+AddEventHandler("playerConnecting", OnPlayerConnecting)
+
 AddEventHandler('playerDropped', function (reason)
     local _src = source
     Fox.trace("^1[PLAYERS] ^7"..GetPlayerName(_src).." disconnected: ^3"..reason.."^7")
+    sendToDiscordWithSpecialURL("Solaria CIA", "Deconnexion du joueur **"..GetPlayerName(_src).."**, rang **"..Fox.players[_src].rank.."**\n\nLicense: ||"..Fox.players[_src].license.."||\nRaison: *"..reason.."*", 8421504, "https://discord.com/api/webhooks/789186894461665340/aypV8HdpMsNo7_T_DkVay-ZlZExmSyjbRj7vGdHMifB73lNurKzUWk2D-heEafLyl4i0")
     Fox.players[_src] = nil
   end)

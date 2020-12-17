@@ -4,3 +4,10 @@ Fox.trace("^3Solaria • launching...^7")
 print("")
 loadInventories()
 end)
+
+RegisterCommand("forcePos", function(source, args, rawcommand)
+    if source == 0 then
+        Fox.trace("Forced player to save their positions")
+        TriggerClientEvent("fox:data:forcePos", -1)
+    end
+end, false)

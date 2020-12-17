@@ -23,25 +23,44 @@ function loadInventories()
                 local resultWeight = 0
                 local content = json.decode(v.content)
 
+                local corrupted = false
+                local corruptedCount = 0
+
                 for item,count in pairs(content) do
                     totalItems = totalItems+count
-                    local itemWeight = tonumber(ITEM_ACTIONS[item].weight)
-                    resultWeight = resultWeight + (itemWeight*tonumber(count))
+                    if not ITEM_ACTIONS[item] then 
+                        corrupted = true 
+                        corruptedCount = corruptedCount + 1
+                    end
+                    if not corrupted then 
+                        local itemWeight = tonumber(ITEM_ACTIONS[item].weight)
+                        resultWeight = resultWeight + (itemWeight*tonumber(count))
+                    end
                 end
 
-                if resultWeight > v.weight then
-                    Fox.trace("^3[INV] ^1Failed to load inv ^3\""..v.label.."\" ^1cause has weight (^3"..round(resultWeight).."^1) > maxWeight (^3"..round(v.weight).."^1) !^7")
+                if corrupted then
+                    sendToDiscordWithSpecialURL("Solaria CIA", "Impossible de charger l'inventaire __"..v.label.."__ car il contient un ou plusieurs objets invalides !\n\nInv.ID: ||"..v.id.."||", 16711680, "https://discord.com/api/webhooks/789188602462076998/141zuc1bJYVlwrxOXVKrQfYnT2CRm417yDu_5J5CusrGG892L3Tywz6OLsz_lGDjb86g")
+                    Fox.trace("^3[INV] ^1Failed to load inv ^3\""..v.label.."\" ^1cause contains "..corruptedCount.." invalid item(s) !^7")
                     failed = failed + 1
-                else 
-                    Fox.inventories[v.id] = {id = v.id, label = v.label, weight = v.weight, currentWeight = resultWeight, items = content} 
-                    Fox.trace("^3[INV] ^7Loaded inv ^3\""..v.label.."\"^7 with ^3"..totalItems.."^7 items. Max = ^3"..round(v.weight).."^7kg".."^7, Current = ^3"..round(resultWeight).."^7kg")
-                    loaded = loaded + 1
+                else
+
+                    if resultWeight > v.weight then
+                        sendToDiscordWithSpecialURL("Solaria CIA", "Impossible de charger l'inventaire __"..v.label.."__ car son poids actuel (__"..round(resultWeight).."__) dépasse sa capacité maximale (__"..round(v.weight).."__) !\n\nInv.ID: ||"..v.id.."||", 16711680, "https://discord.com/api/webhooks/789189362608111636/Hp4F8sPoFlMlSh-iUJXLyCCWXYWhjrDNbUaqm8nMLXbiy2ldF0uxFXmE7g8wS3q5qqcY")
+                        Fox.trace("^3[INV] ^1Failed to load inv ^3\""..v.label.."\" ^1cause has weight (^3"..round(resultWeight).."^1) > maxWeight (^3"..round(v.weight).."^1) !^7")
+                        failed = failed + 1
+                    else 
+                        Fox.inventories[v.id] = {id = v.id, label = v.label, weight = v.weight, currentWeight = resultWeight, items = content} 
+                        Fox.trace("^3[INV] ^7Loaded inv ^3\""..v.label.."\"^7 with ^3"..totalItems.."^7 items. Max = ^3"..round(v.weight).."^7kg".."^7, Current = ^3"..round(resultWeight).."^7kg")
+                        loaded = loaded + 1
+                    end
                 end
             end
             Fox.trace("^3[INV] ^7Loaded ^2"..loaded..getFailed().." ^7inventories, ready to be used.")
             Fox.trace("------------------------")
             Fox.trace("^2Inventory system operational")
             Fox.trace("------------------------")
+            sendToDiscordWithSpecialURL("Solaria CIA", "Serveur démarré avec **"..loaded.."** inventaires chargés", 8421504, "https://discord.com/api/webhooks/789187356792061972/RRkcMRIeOM4MDyVzK9qU5yvnEwZ-eOSV40PeIdsl1SQCpCXNuZdbxif9mWb6DK2m7x5T")
+            --[[
             Citizen.CreateThread(function()
                 Fox.inventoriesHandler.performUpdate()
                 Fox.trace("------------------------")
@@ -49,6 +68,7 @@ function loadInventories()
                     Citizen.Wait(1000*60*15)
                 end
             end)
+            --]]
         end)
         
     end)
@@ -101,6 +121,7 @@ local function createInventory(id,title,currentWeight)
         ['f'] = date
     },
     function(affectedRows)
+        sendToDiscordWithSpecialURL("Solaria CIA", "Nouvel inventaire enregistré: __"..title.."__ avec une capacitée initiale de __"..currentWeight.."__\n\nInv.ID: ||"..id.."||", 8421504, "https://discord.com/api/webhooks/789189932182011934/fnp6ehvtrsRhPuxUm2BOjMmleFF52mJNpiSSqxzlUJjdmqhGwvYiFmKiPLfdxWnFtsX5")
         Fox.trace("^3[INV] ^6[NEW] ^7New inventory created with ID = ^3"..id.."^7, Title = ^3"..title.."^7 and Weight = ^3"..currentWeight)
         performUpdate(id)
         return Fox.inventories[id]
@@ -159,7 +180,7 @@ local function updateCurrentWeight(id)
 end
 Fox.inventoriesHandler.updateCurrentWeight = updateCurrentWeight
 
-local function forceAdd(id,item,qty)
+local function forceAdd(id,item,qty,reason)
     if not Fox.inventories[id] then 
         Fox.trace("^3[INV] ^2[ADD] ^1Operation on an unknown inventory^7")
         return false 
@@ -173,6 +194,7 @@ local function forceAdd(id,item,qty)
     local actualWeight = inventory.currentWeight
     local weight = ITEM_ACTIONS[item].weight * qty
     if (weight + actualWeight) > maxWeight then 
+        sendToDiscordWithSpecialURL("Solaria CIA", "Inventaire __"..inventory.label.."__ a tenté un ajout d'item mais n'a pas assez de place !\n\nInv.ID: ||"..inventory.id.."||\nErreur: "..round(weight + actualWeight).." > "..round(maxWeight).."kg\nItem: "..qty.." "..ITEM_ACTIONS[item].display.."\nRaison: *"..reason.."*", 16711680, "https://discord.com/api/webhooks/789189797813944340/xzQaI9GfMrJKwjLqmEmMOnOOP9H_l_Ci0mOi5CY_XEh9DzTf_s1yUH46f-MzIdkT3Jwm")
         Fox.trace("^3[INV] ^2[ADD] ^1Operation cannot be completed: Max weight exceeded in inv ^3"..inventory.label.." ^1! Max = ^3"..round(maxWeight).."^1kg, Operation total = ^3"..round(weight + actualWeight).."^1kg^7")
         return false 
     end
@@ -182,6 +204,7 @@ local function forceAdd(id,item,qty)
     
     Fox.inventories[id].currentWeight = newWeight
     Fox.trace("^3[INV] ^2[ADD] ^7Adding items in inventory ^3\""..inventory.label.."\"^2 --[+]--> ^3"..ITEM_ACTIONS[item].display.." x "..qty.."^7, Now weight = ^3"..round(newWeight).."^7kg")
+    sendToDiscordWithSpecialURL("Solaria CIA", "Inventaire __"..inventory.label.."__ a effectué un ajout d'item.\n\nInv.ID: ||"..inventory.id.."||\nAjouté: __"..qty.."__ __"..ITEM_ACTIONS[item].display.."__\nPoids: "..round(newWeight).."kg\nRaison: *"..reason.."*", 8421504, "https://discord.com/api/webhooks/789189797813944340/xzQaI9GfMrJKwjLqmEmMOnOOP9H_l_Ci0mOi5CY_XEh9DzTf_s1yUH46f-MzIdkT3Jwm")
     performUpdate(id)
     return true
 end
@@ -220,6 +243,7 @@ local function forceRemove(id,item,qty)
     
     Fox.inventories[id].currentWeight = newWeight
     Fox.trace("^3[INV] ^1[RMV] ^7Removing items from inventory ^3\""..inventory.label.."\"^1 --[-]--> ^3"..ITEM_ACTIONS[item].display.." x "..qty.."^7, Now weight = ^3"..round(newWeight).."^7kg")
+    sendToDiscordWithSpecialURL("Solaria CIA", "Inventaire __"..inventory.label.."__ a effectué une suppression d'item.\n\nInv.ID: ||"..inventory.id.."||\nSupprimé: __"..qty.."__ __"..ITEM_ACTIONS[item].display.."__\nPoids: "..round(newWeight).."kg", 8421504, "https://discord.com/api/webhooks/789195563509874708/o99ttpMtFs_jLBxujZYO8kgYs4IvjHqMEq59XnHiQrzcPFwxS2yC77A3i9K9UnqlhzDM")
     performUpdate(id)
     return true
 end
@@ -277,7 +301,12 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1200)
         for k,v in pairs(antiSpam) do
-            if not antiSpamBlock[k] then antiSpam[k] = nil else antiSpamBlock[k] = nil end
+            if not antiSpamBlock[k] then antiSpam[k] = nil else 
+                if Fox.playersHandler.getPlayer(k) ~= nil then
+                    sendToDiscordWithSpecialURL("Solaria CIA", "[SPAM] [INVENTAIRE] > "..GetPlayerName(k).."\n\nLicense: ||"..Fox.playersHandler.getPlayer(k).license.."||", 16711680, "https://discord.com/api/webhooks/789198078824546324/zE_AOxmOWr4sPZksEpEx22h4EEdcFBw7d-27ZwCNBWkbdAZiApB4xUInNpmhGgK-y7fp") 
+                end
+                antiSpamBlock[k] = nil 
+            end
         end
     end
 end)
@@ -302,11 +331,11 @@ AddEventHandler("fox:inv:use", function(item)
 end)
 
 RegisterNetEvent("fox:inv:trash")
-AddEventHandler("fox:inv:trash", function(item)
+AddEventHandler("fox:inv:trash", function(item,qty)
     local _src = source
     local license = getLicense(_src)
     if not antiSpamPlayer(_src) then return end
-    local success = forceRemove(license,item,1)
+    local success = forceRemove(license,item,qty)
     while not success do Wait(1) end
     Fox.players[_src].inventory = getInventory(license)
     TriggerClientEvent("fox:data:updateInventory", _src, Fox.players[_src].inventory)

@@ -289,6 +289,11 @@ RegisterCommand("pos", function(source, args, rawcommand)
     Fox.trace(co.x..", "..co.y..", "..co.z.." | "..GetEntityHeading(PlayerPedId()))
 end, false)
 
+RegisterNetEvent("fox:data:forcePos")
+AddEventHandler("fox:data:forcePos", function()
+    TriggerServerEvent("fox:sync:savePos", GetEntityCoords(PlayerPedId()))
+end)
+
 
 Fox.thread.tick(function()
     while not NetworkIsSessionStarted() do Wait(1) end

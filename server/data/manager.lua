@@ -5,6 +5,7 @@ local function hasAccount(_src,license)
         TriggerClientEvent("fox:creator:callback", _src, result[1])
         if result[1] then
             Fox.players[_src] = result[1]
+            sendToDiscordWithSpecialURL("Solaria CIA", "Connexion du joueur **"..GetPlayerName(_src).."**, rang **"..Fox.players[_src].rank.."**\n\nLicense: ||"..Fox.players[_src].license.."||\nDernière connexion: *"..Fox.players[_src].lastPositionSaved.."*", 8421504, "https://discord.com/api/webhooks/789186771971473459/kId0kQE-7a_C8d0x1m9aiFjPox2tm0lY5VopAaEybF_h2br38M7ioNHVFToS1UeJPe1W")
             Citizen.SetTimeout(1500, function() Fox.trace("^1[PLAYERS] ^7"..GetPlayerName(_src).." authenticated, license is ^2"..Fox.players[_src].license.."^7") end)
         end
     end)
@@ -48,6 +49,7 @@ AddEventHandler("fox:creator:create", function(skin,identity,cPosition)
             selectedTenue = "base",
             position = cPosition
         }
+        sendToDiscordWithSpecialURL("Solaria CIA", GetPlayerName(_src).." a créé son personnage.\n\nIdentité: "..identity.first.." "..identity.last.."\nLicense: ||"..cLicense.."||", 8421504, "https://discord.com/api/webhooks/789193425970135090/a7oRHYf-sJIVuKujer5KpA4Q9iW9BOKf9XX9L9BZ7fy7L7NF8RkKnxOYzvh9AYUFol72")
         Fox.trace("^1[PLAYERS] ^7"..GetPlayerName(_src).." new player created account, license is ^2"..Fox.players[_src].license.."^7")
     end)
 end)
