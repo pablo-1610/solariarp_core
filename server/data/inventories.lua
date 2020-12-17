@@ -43,7 +43,7 @@ function loadInventories()
             Fox.trace("^2Inventory system operational")
             Fox.trace("------------------------")
             Citizen.CreateThread(function()
-                Fox.inventoriesHandler.performUpdate()
+                --Fox.inventoriesHandler.performUpdate() Disabling major update system to avoid false "lastUpdate" infos.
                 Fox.trace("------------------------")
                 while true do
                     Citizen.Wait(1000*60*15)
