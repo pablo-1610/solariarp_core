@@ -107,7 +107,7 @@ Fox.utils.openSelfInventory = function()
                         for i = 1,tonumber(Fox.localData.self.inventory.items[selectedItem]) do trashList[i] = "~r~Jeter "..i.."~s~" end
                         if totrash > Fox.localData.self.inventory.items[selectedItem] then totrash = 1 end
 
-                        RageUI.List("~b~Jeter", trashList, totrash, nil, {}, true, function(Hovered, Active, Selected, Index)
+                        RageUI.List("~b~Jeter", trashList, totrash, nil, {}, not ITEM_ACTIONS[selectedItem].illegal, function(Hovered, Active, Selected, Index)
                             if Selected then
                                 act = true TriggerServerEvent("fox:inv:trash", selectedItem,totrash)
                             end

@@ -62,7 +62,7 @@ client_scripts {
     "client/main/*.lua",
     "client/ui/*.lua",
     "client/utils/*.lua",
-	"client/inventory/*.lua",
+	"client/menus/*.lua",
 	"client/data/*.lua"
 
     , "client/ipls/lib/common.lua"
