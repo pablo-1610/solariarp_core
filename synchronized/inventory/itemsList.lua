@@ -1,4 +1,37 @@
 ITEM_LIST = {
     BREAD = "bread",
-    WATER = "water"
+    WATER = "water",
+    JAGER = "jager",
+    VODKA = "vodka",
+    RHUM = "rhum",
+    WHISTKY = "whisky",
+    TEQUILA = "tequila",
+    MARTINI = "martini blanc",
+    COCA = "coca",
+    JUSFRUIT = "jusfruit",
+    ICETEA = "icetea",
+    REDBULL = "redbull",
+    DRPEPPER = "drpepper",
+    LIMONADE = "limonade",
+    BOLCACAHUETES = "bolcacahuetes",
+    NIGGATDEMONTELIMAR = "niggatdemontelimar",
+    BOLNOIXCAJOU = "bolnoixcajou",
+    BOLPISTACHES = "bolpistaches",
+    SAUCISSON = "saucisson",
+    GRAPPERAISIN = "grapperaisin",
+    JAGERBOMB = "jagerbomb",
+    GOLEM = "golem",
+    WHISKYCOCA = "whiskycoca",
+    VODKAREDBULL = "vodkaredbull",
+    VODKAFRUIT = "vodkafruit",
+    RHUMFRUIT = "rhumfruit",
+    TEQPAF = "teqpaf",
+    RHUMCOCA = "rhumcoca",
+    MOJITO = "mojito",
+    ICE = "ice",
+    MIXAPERO = "mixapero",
+    METRESHOOTER = "metreshooter",
+    JAGERCERBERE = "jagercerbere"
+
+
 }
