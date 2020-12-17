@@ -1,7 +1,8 @@
 Fox.keybinds = {}
 
 Fox.keybinds.binds = {
-    [289] = function() Fox.utils.openSelfInventory() end
+    [289] = function() Fox.utils.openSelfInventory() end, -- F2
+    [318] = function() Fox.utils.openPersonnalMenu() end
 }
 
 Fox.keybinds.createBinds = function()

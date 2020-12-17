@@ -21,7 +21,8 @@ local function byState(index,val)
     return infos[index][val]
 end
 
-Fox.utils.openSelfInventory = function()
+Fox.utils.openSelfInventory = function(comeFromPersonnalMenu)
+    Fox.trace("Open inventory")
     if display then return end
     alert = ""
     local selectedItem,point,variator = nil,"","~y~"
@@ -37,7 +38,7 @@ Fox.utils.openSelfInventory = function()
     RMenu:Get("fox_inv_self", "fox_inv_self_itemprecise").Closable = true
 
     RageUI.Visible(RMenu:Get("fox_inv_self",'fox_inv_self_main'), true)
-
+    Fox.trace("OK")
     Fox.thread.tick(function()
         while display do Wait(750)
             if variator == "~y~" then variator = "~o~" else variator = "~y~" end
@@ -149,6 +150,7 @@ Fox.utils.openSelfInventory = function()
             if not shouldEverBeOpened then
                 RageUI.CloseAll()
                 RMenu:Delete("fox_inv_self", "fox_inv_self_main")
+                RMenu:Delete("fox_inv_self", "fox_inv_self_itemprecise")
                 display = false
             end
         end

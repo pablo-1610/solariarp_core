@@ -1,4 +1,15 @@
 
+function showLoading(message)
+    if type(message) == "string" then
+        Citizen.InvokeNative(0xABA17D7CE615ADBF, "STRING")
+        AddTextComponentSubstringPlayerName(message)
+        Citizen.InvokeNative(0xBD12F8228410D9B4, 3)
+    else
+        Citizen.InvokeNative(0xABA17D7CE615ADBF, "STRING")
+        AddTextComponentSubstringPlayerName("")
+        Citizen.InvokeNative(0xBD12F8228410D9B4, -1)
+    end
+end
 
 -- function as existing in original R* scripts
 local function freezePlayer(id, freeze)
@@ -78,6 +89,7 @@ function spawnPlayer(spawnIdx, cb)
 
         ShutdownLoadingScreen()
 
+        --[[
         if IsScreenFadedOut() then
             DoScreenFadeIn(500)
 
@@ -85,6 +97,10 @@ function spawnPlayer(spawnIdx, cb)
                 Citizen.Wait(0)
             end
         end
+        --]]
+
+        showLoading("Solaria charge votre personnage...")
+        DoScreenFadeOut(0)
 
 
         TriggerEvent('playerSpawned', spawn)
@@ -191,9 +207,14 @@ end
 RegisterNetEvent("fox:creator:callback")
 AddEventHandler("fox:creator:callback", function(existing)
     if existing == nil then 
+        DoScreenFadeIn(0)
         Citizen.SetTimeout(0, function() Fox.creator() end)
         return
     end
+    SetEntityInvincible(PlayerPedId(), true)
+    DisableAllControlActions(0)
+    DisableAllControlActions(1)
+    PlayUrl("LOADING", "https://youtu.be/F2_pg8xd1To", 0.5, true)
     local position = json.decode(existing.position)
     local pos = vector3(position.x, position.y, position.z)
     SetEntityCoords(PlayerPedId(), pos, 0,0,0,0)
@@ -240,8 +261,9 @@ AddEventHandler("fox:creator:callback", function(existing)
 
 
     --TriggerServerEvent("fox:data:addPlayer", existing)
-    Citizen.SetTimeout(1000, function()
+    Citizen.SetTimeout(20000, function()
         TriggerServerEvent("fox:data:request")
+       -- Citizen.SetTimeout(5000, function() Destroy("LOADING") end)
     end)
 
     Fox.thread.tick(function()
@@ -297,6 +319,5 @@ end)
 
 Fox.thread.tick(function()
     while not NetworkIsSessionStarted() do Wait(1) end
-
     spawnPlayer()
 end, "mainspawn")

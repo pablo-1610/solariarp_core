@@ -39,6 +39,9 @@ function EnumeratePeds()
 	return EnumerateEntities(FindFirstPed, FindNextPed, EndFindPed)
 end
 
+function EnumerateVehicles()
+	return EnumerateEntities(FindFirstVehicle, FindNextVehicle, EndFindVehicle)
+end
 
 -- TODO A DESACTIVER
 
