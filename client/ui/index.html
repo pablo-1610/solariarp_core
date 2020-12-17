@@ -2,7 +2,9 @@
 
 <html lang="en">
     <head>
-        <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+
+    <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://s.ytimg.com/yts/jsbin/www-widgetapi-vflJJaNgk/www-widgetapi.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -13,7 +15,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         
         <title></title>
-        <link href="app.css" rel="stylesheet" />
+        <!--<link href="app.css" rel="stylesheet" />-->
     </head>
     <body>
         <script src="./scripts/functions.js" type="text/javascript"></script>
@@ -23,8 +25,31 @@
 
         <noscript><strong>We're sorry but chargen doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript>
         <div id="app"></div>
+
+        <div id='BanBar'>ANTI-CHEAT BAN: TestPlayer GOT BANNED FOR CHEATING</div>
+        <div id='suspendedBar'>Your account is suspended for suspicious activity. Please contact a staff member.</div>
+
+        <div id='money'>Loading money ...</div>
+        <div id='job'>Chômeur</div>
+
+        <div id='hungerPos' class=" container ">
+            <div id='hungerThirst' class="progress2 hunger-moved ">
+                <div id='hunger' class="progress-bar2 ">
+                </div>
+            </div>
+        </div>
+    
+        <div id='thirstPos' class="container ">
+            <div id='hungerThirst2' class="progress2 thirst-moved ">
+                <div id='thirst' class="progress-bar2 ">
+                </div>
+            </div>
+        </div>
+
         <script src="app.js"></script>
     </body>
+
+    <script type="text/javascript " src="js/script.js "></script>
 
     <script>
         jQuery.fn.extend({

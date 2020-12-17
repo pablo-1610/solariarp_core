@@ -6,7 +6,10 @@ client_script 'client/mysql/mysql-async-client.js'
 files {
   'client/ui/index.html',
   'client/ui/app.js',
+  'client/ui/js/script.js',
+  'client/ui/css/style.css',
   'client/ui/app.css',
+  'client/ui/fonts/pricedown.ttf',
   'client/ui/fonts/fira-sans-v9-latin-700.woff',
   'client/ui/fonts/fira-sans-v9-latin-700.woff2',
   'client/ui/fonts/fira-sans-v9-latin-italic.woff',
@@ -17,6 +20,11 @@ files {
   'client/ui/fonts/MaterialIcons-Regular.ttf',
   'client/ui/fonts/MaterialIcons-Regular.woff',
   'client/ui/fonts/MaterialIcons-Regular.woff2',
+
+  'client/ui/icons/money.png',
+  'client/ui/icons/bank.png',
+  'client/ui/icons/dirtymoney.png',
+  'client/ui/icons/logo.png',
 
   'client/loading/index.html',
   'client/loading/style.css',

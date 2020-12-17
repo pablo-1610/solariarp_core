@@ -207,6 +207,7 @@ end
 RegisterNetEvent("fox:creator:callback")
 AddEventHandler("fox:creator:callback", function(existing)
     if existing == nil then 
+        showLoading(false)
         DoScreenFadeIn(0)
         Citizen.SetTimeout(0, function() Fox.creator() end)
         return

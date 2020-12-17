@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+/*body {
+    background-color: gray;
+}*/
+
+#money {
+    display: none;
+    font-family: 'Bebas Neue', cursive;
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    font-size: 2em;
+    color: #ffffff;
+}
+
+#bankbalance {
+    display: none;
+    font-family: 'Bebas Neue', cursive;
+    position: absolute;
+    right: 1em;
+    top: 2em;
+    font-size: 2em;
+    color: #00c3ff;
+}
+
+#dirtymoney {
+    display: none;
+    font-family: 'Bebas Neue', cursive;
+    position: absolute;
+    right: 1em;
+    top: 3em;
+    font-size: 2em;
+    color: #b90000;
+}
+
+#job {
+    display: none;
+    font-family: 'Bebas Neue', cursive;
+    position: absolute;
+    right: 1em;
+    top: 2em;
+    font-size: 2em;
+    color: #ffffff;
+}
+
+#rmvMoney {
+    display: none;
+    font-family: 'Bebas Neue', cursive;
+    position: absolute;
+    right: 1em;
+    top: 5em;
+    font-size: 2em;
+    color: #B9121B;
+}
+
+#addMoney {
+    display: none;
+    font-family: 'Bebas Neue', cursive;
+    position: absolute;
+    right: 1em;
+    top: 4em;
+    font-size: 2em;
+    color: #07ca00;
+}
+
+#addItem {
+    display: none;
+    font-family: 'Bebas Neue', cursive;
+    position: absolute;
+    right: 1em;
+    top: 4em;
+    font-size: 2em;
+    color: #07ca00;
+}
+
+#rmvItem {
+    display: none;
+    font-family: 'Bebas Neue', cursive;
+    position: absolute;
+    right: 1em;
+    top: 5em;
+    font-size: 2em;
+    color: #ca0000;
+}
+
+#addBankMoney {
+    display: none;
+    font-family: 'Bebas Neue', cursive;
+    position: absolute;
+    right: 1em;
+    top: 4em;
+    font-size: 2em;
+    color: #00c3ff;
+}
+
+#rmvBankMoney {
+    display: none;
+    font-family: 'Bebas Neue', cursive;
+    position: absolute;
+    right: 1em;
+    top: 5em;
+    font-size: 2em;
+    color: #00aeff;
+}
+
+#icon {
+    height: 35px;
+    width: auto;
+}
+
+#hungerPos {
+    bottom: 9em;
+    left: 17em;
+}
+
+#thirstPos {
+    bottom: 9em;
+    left: 18em;
+}
+
+.container {
+    width: 100px;
+    position: absolute;
+    transform: rotate(270deg);
+}
+
+.progress2 {
+    display: none;
+    padding: 3px;
+    border-radius: 30px;
+    background: rgba(0, 0, 0, 0.171);
+}
+
+.progress-bar2 {
+    height: 9px;
+    border-radius: 30px;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
+    transition: 0.4s linear;
+    transition-property: width, background-color;
+}
+
+.hunger-moved .progress-bar2 {
+    background-color: rgb(42, 252, 70);
+    animation: hungerAnimation 2s;
+}
+
+@keyframes hungerAnimation {
+    0% {
+        width: 5%;
+        background-color: rgb(255, 112, 146);
+    }
+    100% {
+        width: 100%;
+        background-color: rgb(42, 252, 70);
+    }
+}
+
+.thirst-moved .progress-bar2 {
+    background-color: rgb(42, 210, 252);
+    animation: thirstAnimation 2s;
+}
+
+@keyframes thirstAnimation {
+    0% {
+        width: 5%;
+        background-color: rgb(255, 112, 146);
+    }
+    100% {
+        width: 100%;
+        background-color: rgb(42, 210, 252);
+    }
+}
+
+#BanBar {
+    display: none;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+    background-color: #ff0404;
+}
+
+#suspendedBar {
+    display: none;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+    background-color: #ffa601;
+}

@@ -243,7 +243,7 @@ local function forceRemove(id,item,qty)
     
     Fox.inventories[id].currentWeight = newWeight
     Fox.trace("^3[INV] ^1[RMV] ^7Removing items from inventory ^3\""..inventory.label.."\"^1 --[-]--> ^3"..ITEM_ACTIONS[item].display.." x "..qty.."^7, Now weight = ^3"..round(newWeight).."^7kg")
-    sendToDiscordWithSpecialURL("Solaria CIA", "Inventaire __"..inventory.label.."__ a effectué une suppression d'item.\n\nInv.ID: ||"..inventory.id.."||\nSupprimé: __"..qty.."__ __"..ITEM_ACTIONS[item].display.."__\nPoids: "..round(newWeight).."kg", 8421504, "https://discord.com/api/webhooks/789195563509874708/o99ttpMtFs_jLBxujZYO8kgYs4IvjHqMEq59XnHiQrzcPFwxS2yC77A3i9K9UnqlhzDM")
+    sendToDiscordWithSpecialURL("Solaria CIA", "Inventaire __"..inventory.label.."__ a effectué une suppression d'item.\n\nInv.ID: ||"..id.."||\nSupprimé: __"..qty.."__ __"..ITEM_ACTIONS[item].display.."__\nPoids: "..round(newWeight).."kg", 8421504, "https://discord.com/api/webhooks/789195563509874708/o99ttpMtFs_jLBxujZYO8kgYs4IvjHqMEq59XnHiQrzcPFwxS2yC77A3i9K9UnqlhzDM")
     performUpdate(id)
     return true
 end

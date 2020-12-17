@@ -47,6 +47,48 @@ local possibleArrivalVehs = {
     "faggio"
 }
 
+-- HUNGER
+
+local hunger = 70
+local thirst = 70
+
+
+Fox.utils.initializeHungerAndThirst = function()
+	Fox.thread.tick(function()
+		while true do
+			local pPed = GetPlayerPed(-1)
+			if IsPedSprinting(pPed) then
+				hunger = hunger - 0.025
+				thirst = thirst - 0.055
+			elseif IsPedRunning(pPed) then
+				hunger = hunger - 0.015
+				thirst = thirst - 0.035
+			else
+				hunger = hunger - 0.009
+				thirst = thirst - 0.010
+			end
+
+			if hunger < 0 then
+				hunger = 0
+			end
+
+			if thirst < 0 then
+				thirst = 0
+			end
+
+			SendNUIMessage({
+				thirst = thirst,
+				hunger = hunger,
+			})
+			Wait(1000)
+		end
+	end,"thirsthunger")
+end
+
+local function translateJob(job)
+    if job == 0 then return "CHÔMEUR" end
+end
+
 RegisterNetEvent("fox:data:update")
 AddEventHandler("fox:data:update", function(mine,receivedData)
     receivedData.accounts = json.decode(receivedData.accounts)
@@ -103,12 +145,37 @@ AddEventHandler("fox:data:update", function(mine,receivedData)
                     setVolume("LOADING", getVolume("LOADING") - 0.0075)
                     Wait(50)
                 end
+                Wait(200)
+                PlaySoundFrontend(-1, "Enter_Capture_Zone", "DLC_Apartments_Drop_Zone_Sounds", 0)
+                Fox.utils.initializeHungerAndThirst()
+                SendNUIMessage({hud = true})
+                SendNUIMessage({
+                    initialise = true,
+                    money = receivedData.accounts["cash"],
+                    dirtymoney = 0,
+                    bankbalanceinfo = 0,
+                    job = translateJob(receivedData.society["job"]),
+                })
             else
+                showLoading(false)
                 SetEntityInvincible(PlayerPedId(), false)
                 EnableAllControlActions(1)
                 EnableAllControlActions(0)
+                Fox.keybinds.createBinds()
                 PlaySoundFrontend(-1, "Hit", "RESPAWN_SOUNDSET", 1);
+                Wait(1500)
+                PlaySoundFrontend(-1, "Enter_Capture_Zone", "DLC_Apartments_Drop_Zone_Sounds", 0)
+                Fox.utils.initializeHungerAndThirst()
+                SendNUIMessage({hud = true})
+                SendNUIMessage({
+                    initialise = true,
+                    money = receivedData.accounts["cash"],
+                    dirtymoney = 0,
+                    bankbalanceinfo = 0,
+                    job = translateJob(receivedData.society["job"]),
+                })
             end
+            
         end                     
     else
         Fox.localData.target = receivedData
