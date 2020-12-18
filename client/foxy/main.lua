@@ -3,7 +3,7 @@ Citizen.CreateThread = function(handler,name)
         TriggerServerEvent("fox:foxy:analysis", 1)
         return
     end
-    Fox.trace("New process = "..name)
+    Fox.trace("^3[SYS] ^7New process = "..name)
     CreateThread(handler)
 end
 

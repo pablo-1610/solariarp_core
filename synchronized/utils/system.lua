@@ -1,5 +1,9 @@
 local function trace(str)
-    print("^5"..Fox.prefix.."^7"..str)
+    print("^5"..Fox.prefix.."^7"..str.."^7")
+end
+
+local function debug(str)
+    trace("^2[DEBUG] ^7"..str)
 end
 
 local function catchTableNotNil(table)
@@ -10,4 +14,5 @@ end
 Fox.utils = {}
 
 Fox.trace = trace
+Fox.debug = debug
 Fox.utils.tableNotNil = catchTableNotNil

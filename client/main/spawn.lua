@@ -266,15 +266,6 @@ AddEventHandler("fox:creator:callback", function(existing)
         TriggerServerEvent("fox:data:request")
        -- Citizen.SetTimeout(5000, function() Destroy("LOADING") end)
     end)
-
-    Fox.thread.tick(function()
-        while true do
-            Citizen.Wait(60000)
-            TriggerServerEvent("fox:sync:savePos", GetEntityCoords(PlayerPedId()))
-        end
-    end, "saverPos")
-    
-    
 end)
 
 -- TODO - Enlever

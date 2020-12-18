@@ -7,7 +7,7 @@ end)
 
 RegisterCommand("forcePos", function(source, args, rawcommand)
     if source == 0 then
-        Fox.trace("Forced player to save their positions")
+        Fox.trace("^1[ADMIN] ^7Forced players to save their positions")
         TriggerClientEvent("fox:data:forcePos", -1)
     end
 end, false)

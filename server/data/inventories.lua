@@ -364,5 +364,5 @@ AddEventHandler("fox:inv:trash", function(item,qty)
     while not success do Wait(1) end
     Fox.players[_src].inventory = getInventory(license)
     TriggerClientEvent("fox:data:updateInventory", _src, Fox.players[_src].inventory)
-    TriggerClientEvent("fox:inv:trashBack", _src, item)
+    TriggerClientEvent("fox:inv:trashBack", _src, item,qty)
 end)

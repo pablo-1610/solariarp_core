@@ -28,8 +28,6 @@ Fox.utils.openPersonnalMenu = function()
         local totrash = 1
         while display do Wait(1)
             local shouldEverBeOpened = false
-            
-
             RageUI.IsVisible(RMenu:Get("fox_perso",'fox_perso_main'),true,true,true,function()
                 shouldEverBeOpened = true
                 RageUI.ButtonWithStyle("Inventaire",nil, {RightLabel = "→→"}, true, function(_,a,s) 
@@ -43,9 +41,7 @@ Fox.utils.openPersonnalMenu = function()
                     end 
                 end)
             end, function()   
-
             end)
-
             if not shouldEverBeOpened then
                 RageUI.CloseAll()
                 RMenu:Delete("fox_perso", "fox_perso_main")

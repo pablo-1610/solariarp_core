@@ -22,7 +22,7 @@ local function byState(index,val)
 end
 
 Fox.utils.openSelfInventory = function(comeFromPersonnalMenu)
-    Fox.trace("Open inventory")
+    Fox.debug("Opening self inventory")
     if display then return end
     alert = ""
     local selectedItem,point,variator = nil,"","~y~"
@@ -38,7 +38,6 @@ Fox.utils.openSelfInventory = function(comeFromPersonnalMenu)
     RMenu:Get("fox_inv_self", "fox_inv_self_itemprecise").Closable = true
 
     RageUI.Visible(RMenu:Get("fox_inv_self",'fox_inv_self_main'), true)
-    Fox.trace("OK")
     Fox.thread.tick(function()
         while display do Wait(750)
             if variator == "~y~" then variator = "~o~" else variator = "~y~" end
@@ -88,7 +87,7 @@ Fox.utils.openSelfInventory = function(comeFromPersonnalMenu)
                 shouldEverBeOpened = true
                 if not act then
                     local canInteract = false
-                    if not selectedItem or not Fox.localData.self.inventory.items[selectedItem] then Fox.trace("^1No more item of this type, returning to inv main") RageUI.GoBack() else
+                    if not selectedItem or not Fox.localData.self.inventory.items[selectedItem] then Fox.debug("No more item of this type, returning to inv main") RageUI.GoBack() else
                         local closet, dst = Fox.clientutils.getClosestPlayer()
                         if closet ~= nil then 
                             local coOther = GetEntityCoords(GetPlayerPed(closet))
@@ -159,8 +158,12 @@ end
 
 RegisterNetEvent("fox:inv:useBack")
 AddEventHandler("fox:inv:useBack", function(item)
+    local qty = 1
     alert = ""
     act = false
+    SendNUIMessage({
+		rmvItem = ITEM_ACTIONS[item].display.." x"..qty
+	})
     ITEMS_CAT_USE[ITEM_ACTIONS[item].category](ITEM_ACTIONS[item].args)
 end)
 
@@ -171,7 +174,13 @@ AddEventHandler("fox:inv:alert", function(str)
 end)
 
 RegisterNetEvent("fox:inv:trashBack")
-AddEventHandler("fox:inv:trashBack", function(item) alert = "" act = false end)
+AddEventHandler("fox:inv:trashBack", function(item,qty)
+    SendNUIMessage({
+		rmvItem = ITEM_ACTIONS[item].display.." x"..qty
+	})
+    alert = "" 
+    act = false 
+end)
 
 
 
@@ -179,9 +188,15 @@ RegisterNetEvent("fox:inv:giveBack")
 AddEventHandler("fox:inv:giveBack", function(item,qty,target)
     alert = "" act = false 
     Fox.clientutils.advancedNotif("Inventaire","~r~Don d'objet","Vous avez donné ~y~"..qty.." "..ITEM_ACTIONS[item].display.." ~s~à ~b~"..target,"CHAR_MILSITE",2)
+    SendNUIMessage({
+		rmvItem = ITEM_ACTIONS[item].display.." x"..qty
+	})
 end)
 
 RegisterNetEvent("fox:inv:receive")
 AddEventHandler("fox:inv:receive", function(item,qty,target)
     Fox.clientutils.advancedNotif("Inventaire","~r~Récéption d'objet","Vous avez reçu ~y~"..qty.." "..ITEM_ACTIONS[item].display.." ~s~de la part de ~b~"..target,"CHAR_MILSITE",2)
+    SendNUIMessage({
+		addItem = ITEM_ACTIONS[item].display.." x"..qty
+	})
 end)

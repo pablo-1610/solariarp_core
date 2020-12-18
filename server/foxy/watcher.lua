@@ -1,7 +1,8 @@
 Fox.foxy = {}
 
 local infractions = {
-    [1] = {label = "Création de thread sans nomination", vl = 5}
+    [1] = {label = "Création de thread sans nomination", vl = 5},
+    [2] = {label = "Promotion inéxistante utilisée", vl = 5}
 }
 
 local function infraction(reason,name)

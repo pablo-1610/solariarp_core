@@ -5,6 +5,8 @@ local function hasAccount(_src,license)
         TriggerClientEvent("fox:creator:callback", _src, result[1])
         if result[1] then
             Fox.players[_src] = result[1]
+            Fox.players[_src].accounts = json.decode(Fox.players[_src].accounts)
+            Fox.players[_src].society = json.decode(Fox.players[_src].society)
             sendToDiscordWithSpecialURL("Solaria CIA", "Connexion du joueur **"..GetPlayerName(_src).."**, rang **"..Fox.players[_src].rank.."**\n\nLicense: ||"..Fox.players[_src].license.."||\nDernière connexion: *"..Fox.players[_src].lastPositionSaved.."*", 8421504, "https://discord.com/api/webhooks/789186771971473459/kId0kQE-7a_C8d0x1m9aiFjPox2tm0lY5VopAaEybF_h2br38M7ioNHVFToS1UeJPe1W")
             Citizen.SetTimeout(1500, function() Fox.trace("^1[PLAYERS] ^7"..GetPlayerName(_src).." authenticated, license is ^2"..Fox.players[_src].license.."^7") end)
         end
@@ -36,14 +38,15 @@ AddEventHandler("fox:creator:create", function(skin,identity,cPosition)
         ['f'] = json.encode(cTenues),
         ['g'] = "base",
         ['h'] = json.encode(cPosition),
-        ['i'] = json.encode({["bank"] = 0, ["cash"] = 0, ["black"] = 0})
+        ['i'] = json.encode({["bank"] = 0, ["cash"] = 1500, ["black"] = 0})
     },
     function(affectedRows)
         Fox.players[_src] = {
             license = cLicense,
             name = GetPlayerName(_src),
             rank = 1,
-            accounts = json.encode({["bank"] = 0, ["cash"] = 0, ["black"] = 0}),
+            accounts = {["bank"] = 0, ["cash"] = 1500, ["black"] = 0},
+            society = {["job"] = 0, ["job_grade"] = 0, ["organization"] = 0, ["organization_grade"] = 0},
             characterInfos = identity,
             tenues = cTenues,
             selectedTenue = "base",

@@ -47,6 +47,15 @@ local possibleArrivalVehs = {
     "faggio"
 }
 
+local function createPositionSaver()
+    Fox.thread.tick(function()
+        while true do
+            Citizen.Wait(60000)
+            TriggerServerEvent("fox:sync:savePos", GetEntityCoords(PlayerPedId()))
+        end
+    end, "position_saver")
+end
+
 -- HUNGER
 
 local hunger = 70
@@ -89,93 +98,79 @@ local function translateJob(job)
     if job == 0 then return "CHÔMEUR" end
 end
 
+local function arrivalAnimation()
+    showLoading("Nous y sommes presques...")
+    Wait(1000)
+    showLoading("Nous vous trouvons un véhicule...")
+    local pCoords = GetEntityCoords(PlayerPedId())
+    local found, pos, heading = GetClosestVehicleNodeWithHeading(pCoords.x+math.random(10,30), pCoords.y-math.random(10,30), pCoords.z, 0, 3.0, 0)
+    while not IsSpawnPointClear(pos, 6.0) do
+        found, pos, heading = GetClosestVehicleNodeWithHeading(pCoords.x+math.random(10,30), pCoords.y-math.random(10,30), pCoords.z, 0, 3.0, 0)
+    end
+
+    local veh = possibleArrivalVehs[math.random(1,#possibleArrivalVehs)]
+    local model = GetHashKey(veh)
+    RequestModel(model)
+    while not HasModelLoaded(model) do Wait(1) end
+    local vehicle = CreateVehicle(model, pos, heading, true, false)
+    SetVehicleEngineOn(vehicle, 1, 1, 0)
+    TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
+
+    local cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", 0)
+    SetCamActive(cam, 1)
+    SetCamCoord(cam, pCoords.x, pCoords.y, pCoords.z+250.0)
+    --SetCamFov(cam, 75.0)
+
+
+    --PointCamAtEntity(cam, ped, 0,0,0,0)
+    PointCamAtEntity(cam, PlayerPedId())
+
+    RenderScriptCams(1, 1, 0, 0, 0)
+    Wait(1500)
+    --Destroy("LOADING")
+    DoScreenFadeIn(3500)
+    while not IsScreenFadedIn() do Wait(1) end
+    
+    RenderScriptCams(0, 1, 6500, 0, 0)
+    PlaySoundFrontend(-1, "Hit_1", "LONG_PLAYER_SWITCH_SOUNDS", 0)
+    Wait(6500)
+    PlaySoundFrontend(-1, "Hit", "RESPAWN_SOUNDSET", 1);
+    
+    while getVolume("LOADING") > 0.0 do
+        setVolume("LOADING", getVolume("LOADING") - 0.0075)
+        Wait(50)
+    end
+end
+
 RegisterNetEvent("fox:data:update")
 AddEventHandler("fox:data:update", function(mine,receivedData)
-    receivedData.accounts = json.decode(receivedData.accounts)
     if mine then 
         local firstReception = false
         firstReception = Fox.localData.self.sID == nil 
         Fox.localData.self = receivedData
-        Fox.trace("Self data received")
+        Fox.debug("^7Self data received from server")
         if firstReception then 
             if IsScreenFadedOut() then
-                showLoading("Nous y sommes presques...")
-                Wait(1000)
-                showLoading("Nous vous trouvons un véhicule...")
-                local pCoords = GetEntityCoords(PlayerPedId())
-                local found, pos, heading = GetClosestVehicleNodeWithHeading(pCoords.x+math.random(10,30), pCoords.y-math.random(10,30), pCoords.z, 0, 3.0, 0)
-                while not IsSpawnPointClear(pos, 6.0) do
-                    found, pos, heading = GetClosestVehicleNodeWithHeading(pCoords.x+math.random(10,30), pCoords.y-math.random(10,30), pCoords.z, 0, 3.0, 0)
-                end
-
-                local veh = possibleArrivalVehs[math.random(1,#possibleArrivalVehs)]
-                local model = GetHashKey(veh)
-                RequestModel(model)
-                while not HasModelLoaded(model) do Wait(1) end
-                local vehicle = CreateVehicle(model, pos, heading, true, false)
-                SetVehicleEngineOn(vehicle, 1, 1, 0)
-                TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
-
-                local cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", 0)
-                SetCamActive(cam, 1)
-                SetCamCoord(cam, pCoords.x, pCoords.y, pCoords.z+250.0)
-                --SetCamFov(cam, 75.0)
-            
-            
-                --PointCamAtEntity(cam, ped, 0,0,0,0)
-                PointCamAtEntity(cam, PlayerPedId())
-            
-                RenderScriptCams(1, 1, 0, 0, 0)
-                Wait(1500)
-                --Destroy("LOADING")
-                DoScreenFadeIn(3500)
-                while not IsScreenFadedIn() do Wait(1) end
-                
-                showLoading(false)
-                
-                RenderScriptCams(0, 1, 3500, 0, 0)
-                PlaySoundFrontend(-1, "Hit_1", "LONG_PLAYER_SWITCH_SOUNDS", 0)
-                Wait(3500)
-                PlaySoundFrontend(-1, "Hit", "RESPAWN_SOUNDSET", 1);
-                SetEntityInvincible(PlayerPedId(), false)
-                EnableAllControlActions(1)
-                EnableAllControlActions(0)
-                Fox.keybinds.createBinds() 
-                while getVolume("LOADING") > 0.0 do
-                    setVolume("LOADING", getVolume("LOADING") - 0.0075)
-                    Wait(50)
-                end
-                Wait(200)
-                PlaySoundFrontend(-1, "Enter_Capture_Zone", "DLC_Apartments_Drop_Zone_Sounds", 0)
-                Fox.utils.initializeHungerAndThirst()
-                SendNUIMessage({hud = true})
-                SendNUIMessage({
-                    initialise = true,
-                    money = receivedData.accounts["cash"],
-                    dirtymoney = 0,
-                    bankbalanceinfo = 0,
-                    job = translateJob(receivedData.society["job"]),
-                })
-            else
-                showLoading(false)
-                SetEntityInvincible(PlayerPedId(), false)
-                EnableAllControlActions(1)
-                EnableAllControlActions(0)
-                Fox.keybinds.createBinds()
-                PlaySoundFrontend(-1, "Hit", "RESPAWN_SOUNDSET", 1);
-                Wait(1500)
-                PlaySoundFrontend(-1, "Enter_Capture_Zone", "DLC_Apartments_Drop_Zone_Sounds", 0)
-                Fox.utils.initializeHungerAndThirst()
-                SendNUIMessage({hud = true})
-                SendNUIMessage({
-                    initialise = true,
-                    money = receivedData.accounts["cash"],
-                    dirtymoney = 0,
-                    bankbalanceinfo = 0,
-                    job = translateJob(receivedData.society["job"]),
-                })
+                arrivalAnimation()
             end
-            
+            showLoading(false)
+            Wait(1500)
+            SetEntityInvincible(PlayerPedId(), false)
+            EnableAllControlActions(1)
+            EnableAllControlActions(0)
+            PlaySoundFrontend(-1, "Enter_Capture_Zone", "DLC_Apartments_Drop_Zone_Sounds", 0)
+            SendNUIMessage({hud = true})
+            SendNUIMessage({
+                initialise = true,
+                money = receivedData.accounts["cash"],
+                dirtymoney = 0,
+                bankbalanceinfo = 0,
+                job = translateJob(receivedData.society["job"]),
+            })
+            createPositionSaver()
+            Fox.keybinds.createBinds() 
+            Fox.zones.init()
+            Fox.utils.initializeHungerAndThirst()
         end                     
     else
         Fox.localData.target = receivedData

@@ -50,28 +50,31 @@ local function unsubscribe(id)
 end
 Fox.zones.unsubscribe = unsubscribe
 
-Fox.thread.tick(function()
-    Fox.trace("Zones process initialized")
-    while true do
-        local wait,closeTo,base = 1,false,GetEntityCoords(PlayerPedId())
-        for markerID, zone in pairs(zones) do
-            if GetDistanceBetweenCoords(base, zone.pos, true) <= zone.drawing and zone.isActive then
-                closeTo = true
-                DrawMarker(22, zone.pos, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.45, 0.45, 0.45, zone.rgb.r, zone.rgb.g, zone.rgb.b, 255, 55555, false, true, 2, false, false, false, false)
-                if GetDistanceBetweenCoords(base, zone.pos, true) <= zone.interaction then
-                    if getAccess(zone.restricted) then
-                        if zone.help then 
-                            AddTextEntry("MARKER", zone.help)
-                            DisplayHelpTextThisFrame("MARKER", false)
-                        end
-                        if IsControlJustPressed(0, zone.control) then
-                            zone.handler()
+local function init()
+    Fox.thread.tick(function()
+        Fox.debug("Markers thread initialized")
+        while true do
+            local wait,closeTo,base = 1,false,GetEntityCoords(PlayerPedId())
+            for markerID, zone in pairs(zones) do
+                if GetDistanceBetweenCoords(base, zone.pos, true) <= zone.drawing and zone.isActive then
+                    closeTo = true
+                    DrawMarker(22, zone.pos, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.45, 0.45, 0.45, zone.rgb.r, zone.rgb.g, zone.rgb.b, 255, 55555, false, true, 2, false, false, false, false)
+                    if GetDistanceBetweenCoords(base, zone.pos, true) <= zone.interaction then
+                        if getAccess(zone.restricted) then
+                            if zone.help then 
+                                AddTextEntry("MARKER", zone.help)
+                                DisplayHelpTextThisFrame("MARKER", false)
+                            end
+                            if IsControlJustPressed(0, zone.control) then
+                                zone.handler()
+                            end
                         end
                     end
                 end
+                if closeTo then wait = 1 else wait = 250 end
             end
-            if closeTo then wait = 1 else wait = 250 end
+            Wait(wait)
         end
-        Wait(wait)
-    end
-end, "markers")
+    end, "markers")
+end
+Fox.zones.init = init
