@@ -7,7 +7,7 @@ function loadCb()
             loaded = loaded + 1
             creditCards[v.id] = v
         end
-        Fox.trace("^2[BANK] ^7Loaded ^3"..loaded.." ^7credit cards !")
+        Fox.trace("^2[BANK] ^7Loaded ^2"..loaded.." ^7credit cards !")
     end)
 end
 

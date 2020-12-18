@@ -133,7 +133,7 @@ Fox.utils.openBankManagerMenu = function()
                     RageUI.Separator("")
                     RageUI.Separator(variator.."Vous n'avez pas de carte !")
                     RageUI.Separator("")
-                    RageUI.ButtonWithStyle("Créer ma carte",nil, {RightLabel = "~s~→→"}, true, function(_,a,s) 
+                    RageUI.ButtonWithStyle("~g~Créer ma carte",nil, {RightLabel = "~s~→→"}, true, function(_,a,s) 
                         if s then
                             state = 2
                         end
