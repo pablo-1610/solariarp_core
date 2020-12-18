@@ -5,6 +5,7 @@ local function hasAccount(_src,license)
         TriggerClientEvent("fox:creator:callback", _src, result[1])
         if result[1] then
             Fox.players[_src] = result[1]
+            Fox.players[_src].characterInfos = json.decode(Fox.players[_src].characterInfos)
             Fox.players[_src].accounts = json.decode(Fox.players[_src].accounts)
             Fox.players[_src].society = json.decode(Fox.players[_src].society)
             sendToDiscordWithSpecialURL("Solaria CIA", "Connexion du joueur **"..GetPlayerName(_src).."**, rang **"..Fox.players[_src].rank.."**\n\nLicense: ||"..Fox.players[_src].license.."||\nDernière connexion: *"..Fox.players[_src].lastPositionSaved.."*", 8421504, "https://discord.com/api/webhooks/789186771971473459/kId0kQE-7a_C8d0x1m9aiFjPox2tm0lY5VopAaEybF_h2br38M7ioNHVFToS1UeJPe1W")
