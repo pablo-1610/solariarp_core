@@ -1,3 +1,5 @@
 local promitions = {}
 
--- Salut
+local function helo()
+    Fox.trace("hello")
+end
