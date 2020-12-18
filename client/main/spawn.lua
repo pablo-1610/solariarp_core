@@ -216,6 +216,7 @@ AddEventHandler("fox:creator:callback", function(existing)
     SetEntityInvincible(PlayerPedId(), true)
     DisableAllControlActions(0)
     DisableAllControlActions(1) 
+    -- jey
     --PlayUrl("LOADING", "https://youtu.be/F2_pg8xd1To", 0.5, true)      TESTTT
     local position = json.decode(existing.position)
     local pos = vector3(position.x, position.y, position.z)

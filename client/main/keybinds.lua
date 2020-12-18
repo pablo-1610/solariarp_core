@@ -3,7 +3,7 @@ Fox.keybinds = {}
 local ragdoll = false
 
 Fox.keybinds.binds = {
-    [51] = function() Fox.utils.openSelfInventory() end, -- F2
+    [289] = function() Fox.utils.openSelfInventory() end, -- F2
     [318] = function() Fox.utils.openPersonnalMenu() end, -- F5
     [83] = function() 
         if not ragdoll then
