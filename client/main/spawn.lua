@@ -216,6 +216,7 @@ AddEventHandler("fox:creator:callback", function(existing)
     SetEntityInvincible(PlayerPedId(), true)
     DisableAllControlActions(0)
     DisableAllControlActions(1)
+
     PlayUrl("LOADING", "https://youtu.be/F2_pg8xd1To", 0.5, true)
     SendNUIMessage({ 
         logo = true
