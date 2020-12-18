@@ -24,6 +24,14 @@ $(function() {
             });
         }
 
+        if (typeof mess.logo !== 'undefined') {
+            if (mess.logo){
+                $('#iconlogo').fadeIn(1500);
+            } else {
+                $('#iconlogo').fadeOut(3500);
+            }
+        }
+
         if (typeof mess.showicon !== 'undefined') {
             $('#iconlogo').fadeIn();
         }

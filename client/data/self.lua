@@ -129,6 +129,9 @@ local function arrivalAnimation()
     Wait(1500)
     --Destroy("LOADING")
     DoScreenFadeIn(3500)
+    SendNUIMessage({ 
+        logo = false
+    })
     SendNuiMessage({
         hideicon = true
     })

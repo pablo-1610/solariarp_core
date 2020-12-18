@@ -217,6 +217,9 @@ AddEventHandler("fox:creator:callback", function(existing)
     DisableAllControlActions(0)
     DisableAllControlActions(1)
     PlayUrl("LOADING", "https://youtu.be/F2_pg8xd1To", 0.5, true)
+    SendNUIMessage({ 
+        logo = true
+    })
     local position = json.decode(existing.position)
     local pos = vector3(position.x, position.y, position.z)
     SetEntityCoords(PlayerPedId(), pos, 0,0,0,0)
