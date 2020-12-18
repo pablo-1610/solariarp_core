@@ -129,8 +129,11 @@ local function arrivalAnimation()
     Wait(1500)
     --Destroy("LOADING")
     DoScreenFadeIn(3500)
+    SendNuiMessage({
+        hideicon = true
+    })
     while not IsScreenFadedIn() do Wait(1) end
-    
+    showLoading(false)
     RenderScriptCams(0, 1, 6500, 0, 0)
     PlaySoundFrontend(-1, "Hit_1", "LONG_PLAYER_SWITCH_SOUNDS", 0)
     Wait(6500)
@@ -140,6 +143,7 @@ local function arrivalAnimation()
         setVolume("LOADING", getVolume("LOADING") - 0.0075)
         Wait(50)
     end
+    Destroy("LOADING")
 end
 
 RegisterNetEvent("fox:data:update")
@@ -154,7 +158,6 @@ AddEventHandler("fox:data:update", function(mine,receivedData)
                 arrivalAnimation()
             end
             showLoading(false)
-            Wait(1500)
             SetEntityInvincible(PlayerPedId(), false)
             EnableAllControlActions(1)
             EnableAllControlActions(0)
@@ -166,11 +169,15 @@ AddEventHandler("fox:data:update", function(mine,receivedData)
                 dirtymoney = 0,
                 bankbalanceinfo = 0,
                 job = translateJob(receivedData.society["job"]),
+                rp = json.decode(receivedData.characterInfos).first.." "..json.decode(receivedData.characterInfos).last
             })
             createPositionSaver()
             Fox.keybinds.createBinds() 
             Fox.zones.init()
             Fox.utils.initializeHungerAndThirst()
+            Fox.ambiences.create()
+            Fox.blips.initialize()
+            TriggerEvent("fox:initialize")
         end                     
     else
         Fox.localData.target = receivedData

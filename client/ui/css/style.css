@@ -4,6 +4,34 @@
     background-color: gray;
 }*/
 
+#logo {
+    width: 100%;
+    font-family: 'Bebas Neue', cursive;
+    height: 100%;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    display: none;
+    font-size: 2em;
+    color: #ffffff;
+}
+
+#iconlogo {
+    width: 100%;
+    height: 100%;
+    background-image: url("https://top-serveurs.net/upload/5dd97f6f4308e-banner.jpg");
+    background-size: 15%;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    display: none;
+}
+
 #money {
     display: none;
     font-family: 'Bebas Neue', cursive;

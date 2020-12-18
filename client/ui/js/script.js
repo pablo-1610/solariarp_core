@@ -16,6 +16,20 @@ $(function() {
             dirtymoneyactuelle = mess.dirtymoneyinfo;
             bankbalanceactuelle = mess.bankbalanceinfo;
             jobactuelle = mess.job;
+            $('#logo').html("Bienvenue sur Solaria " + mess.rp);
+            $("#logo").fadeIn(2500, function() {
+                setTimeout(function() {
+                    $("#logo").fadeOut(2500, function() {});
+                }, 4500);
+            });
+        }
+
+        if (typeof mess.showicon !== 'undefined') {
+            $('#iconlogo').fadeIn();
+        }
+
+        if (typeof mess.hideicon !== 'undefined') {
+            $('#iconlogo').fadeOut(3500);
         }
 
         if (typeof mess.moneyinfo !== 'undefined') {
@@ -167,6 +181,14 @@ $(function() {
             $("#BanBar").fadeIn("slow", function() {
                 setTimeout(function() {
                     $("#BanBar").fadeOut("slow", function() {});
+                }, 5000);
+            });
+        }
+
+        if (typeof mess.welcome !== 'undefined') {
+            $("#logo").fadeIn("slow", function() {
+                setTimeout(function() {
+                    $("#logo").fadeOut("slow", function() {});
                 }, 5000);
             });
         }

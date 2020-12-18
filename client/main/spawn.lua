@@ -99,6 +99,7 @@ function spawnPlayer(spawnIdx, cb)
         end
         --]]
 
+        
         showLoading("Solaria charge votre personnage...")
         DoScreenFadeOut(0)
 
