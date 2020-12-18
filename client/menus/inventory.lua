@@ -22,7 +22,7 @@ local function byState(index,val)
 end
 
 Fox.utils.openSelfInventory = function(comeFromPersonnalMenu)
-    Fox.debug("Opening self inventory")
+    Fox.debug("Opening self inventory for player")
     if display then return end
     alert = ""
     local selectedItem,point,variator = nil,"","~y~"

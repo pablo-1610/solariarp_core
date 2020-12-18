@@ -169,7 +169,7 @@ AddEventHandler("fox:data:update", function(mine,receivedData)
                 dirtymoney = 0,
                 bankbalanceinfo = 0,
                 job = translateJob(receivedData.society["job"]),
-                rp = json.decode(receivedData.characterInfos).first.." "..json.decode(receivedData.characterInfos).last
+                rp = receivedData.characterInfos.first.." "..receivedData.characterInfos.last
             })
             createPositionSaver()
             Fox.keybinds.createBinds() 
