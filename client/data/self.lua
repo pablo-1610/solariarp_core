@@ -4,6 +4,8 @@ Fox.localData.self = {}
 Fox.localData.target = {}
 Fox.localData.awaitingUpdate = false
 
+RegisterNetEvent("fox:initialize")
+
 RegisterNetEvent("fox:data:updateInventory")
 AddEventHandler("fox:data:updateInventory", function(receivedData)
     Fox.localData.self.inventory = receivedData

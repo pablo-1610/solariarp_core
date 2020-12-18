@@ -15,7 +15,7 @@ local function create(id, color, type, loc, helpMsg, onEnter)
         interaction = 1.0,
         control = 51
     }
-    Fox.trace("Creating new marker wich id is "..id)   
+    Fox.debug("Creating new marker wich id is "..id)   
     return id
 end
 Fox.zones.create = create
@@ -30,13 +30,19 @@ Fox.zones.getAccess = getAccess
 
 local function delete(id)
     if not zones[id] then 
-        Fox.trace("Trying to remove marker wich not exists ! Marker id is "..id)
+        Fox.debug("Trying to remove marker wich not exists ! Marker id is "..id)
         return
     end
     zones[id] = nil
-    Fox.trace("Removing marker wich id is "..id)
+    Fox.debug("Removing marker wich id is "..id)
 end
 Fox.zones.delete = delete
+
+local function drawDist(id,int)
+    if not zones[id] then return end
+    zones[id].drawing = int
+end
+Fox.zones.drawDist = drawDist
 
 local function subscribe(id)
     if not zones[id] then return end

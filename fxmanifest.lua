@@ -169,6 +169,7 @@ client_scripts {
 	"client/modules/creator/creator.lua",
 	"client/modules/npcs/*.lua",
 	"client/modules/zones/*.lua",
+	"client/modules/bank/*.lua",
 
 	"client/ui/api/*.lua"
 
