@@ -29,7 +29,6 @@ AddEventHandler("fox:creator:create", function(skin,identity,cPosition)
     local cTenues = {["base"] = skin}
     local date = os.date("*t", os.time()).day.."/"..os.date("*t", os.time()).month.."/"..os.date("*t", os.time()).year.." à "..os.date("*t", os.time()).hour.."h"..os.date("*t", os.time()).min
     MySQL.Async.execute('INSERT INTO users (license,name,rank,accounts,createdAt,characterInfos,tenues,selectedTenue,position) VALUES (@a,@b,@c,@i,@d,@e,@f,@g,@h)',
-
     { 
         ['a'] = cLicense ,
         ['b'] = GetPlayerName(_src),
@@ -46,6 +45,7 @@ AddEventHandler("fox:creator:create", function(skin,identity,cPosition)
             license = cLicense,
             name = GetPlayerName(_src),
             rank = 1,
+            credit_card = -1,
             accounts = {["bank"] = 0, ["cash"] = 1500, ["black"] = 0},
             society = {["job"] = 0, ["job_grade"] = 0, ["organization"] = 0, ["organization_grade"] = 0},
             characterInfos = identity,

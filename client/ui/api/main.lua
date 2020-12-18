@@ -8,7 +8,7 @@ MusicZone = {
         dst = 20.0,
         starting = 30.0,
         pos = vector3(249.25, 217.78, 106.28),
-        max = 1.0,
+        max = 0.5,
     }
     
 }

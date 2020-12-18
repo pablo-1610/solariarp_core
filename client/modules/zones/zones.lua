@@ -1,11 +1,11 @@
 local zones = {}
 Fox.zones = {}
 
-local function create(id, color, type, loc, helpMsg, onEnter)
+local function create(id, color, loc, helpMsg, onEnter)
     if zones[id] then id = #zones+1 end
     zones[id] = {
         rgb = color,
-        sprite = type,
+        sprite = 22,
         handler = onEnter,
         pos = loc,
         help = helpMsg,
@@ -64,7 +64,7 @@ local function init()
             for markerID, zone in pairs(zones) do
                 if GetDistanceBetweenCoords(base, zone.pos, true) <= zone.drawing and zone.isActive then
                     closeTo = true
-                    DrawMarker(22, zone.pos, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.45, 0.45, 0.45, zone.rgb.r, zone.rgb.g, zone.rgb.b, 255, 55555, false, true, 2, false, false, false, false)
+                    DrawMarker(zone.sprite, zone.pos, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.45, 0.45, 0.45, zone.rgb.r, zone.rgb.g, zone.rgb.b, 255, 55555, false, true, 2, false, false, false, false)
                     if GetDistanceBetweenCoords(base, zone.pos, true) <= zone.interaction then
                         if getAccess(zone.restricted) then
                             if zone.help then 

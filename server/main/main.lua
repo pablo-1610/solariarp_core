@@ -3,6 +3,7 @@ for i = 1,3 do print("") end
 Fox.trace("^3Solaria • launching...^7")
 print("")
 loadInventories()
+loadCb()
 end)
 
 RegisterCommand("forcePos", function(source, args, rawcommand)

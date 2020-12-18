@@ -40,17 +40,17 @@ function loadInventories()
 
                 if corrupted then
                     sendToDiscordWithSpecialURL("Solaria CIA", "Impossible de charger l'inventaire __"..v.label.."__ car il contient un ou plusieurs objets invalides !\n\nInv.ID: ||"..v.id.."||", 16711680, "https://discord.com/api/webhooks/789188602462076998/141zuc1bJYVlwrxOXVKrQfYnT2CRm417yDu_5J5CusrGG892L3Tywz6OLsz_lGDjb86g")
-                    Fox.trace("^3[INV] ^1Failed to load inv ^3\""..v.label.."\" ^1cause contains "..corruptedCount.." invalid item(s) !^7")
+                    --Fox.trace("^3[INV] ^1Failed to load inv ^3\""..v.label.."\" ^1cause contains "..corruptedCount.." invalid item(s) !^7")
                     failed = failed + 1
                 else
 
                     if resultWeight > v.weight then
                         sendToDiscordWithSpecialURL("Solaria CIA", "Impossible de charger l'inventaire __"..v.label.."__ car son poids actuel (__"..round(resultWeight).."__) dépasse sa capacité maximale (__"..round(v.weight).."__) !\n\nInv.ID: ||"..v.id.."||", 16711680, "https://discord.com/api/webhooks/789189362608111636/Hp4F8sPoFlMlSh-iUJXLyCCWXYWhjrDNbUaqm8nMLXbiy2ldF0uxFXmE7g8wS3q5qqcY")
-                        Fox.trace("^3[INV] ^1Failed to load inv ^3\""..v.label.."\" ^1cause has weight (^3"..round(resultWeight).."^1) > maxWeight (^3"..round(v.weight).."^1) !^7")
+                        --Fox.trace("^3[INV] ^1Failed to load inv ^3\""..v.label.."\" ^1cause has weight (^3"..round(resultWeight).."^1) > maxWeight (^3"..round(v.weight).."^1) !^7")
                         failed = failed + 1
                     else 
                         Fox.inventories[v.id] = {id = v.id, label = v.label, weight = v.weight, currentWeight = resultWeight, items = content} 
-                        Fox.trace("^3[INV] ^7Loaded inv ^3\""..v.label.."\"^7 with ^3"..totalItems.."^7 items. Max = ^3"..round(v.weight).."^7kg".."^7, Current = ^3"..round(resultWeight).."^7kg")
+                        --Fox.trace("^3[INV] ^7Loaded inv ^3\""..v.label.."\"^7 with ^3"..totalItems.."^7 items. Max = ^3"..round(v.weight).."^7kg".."^7, Current = ^3"..round(resultWeight).."^7kg")
                         loaded = loaded + 1
                     end
                 end
