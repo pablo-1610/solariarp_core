@@ -20,6 +20,7 @@ local function getCardInfos(id)
 end
 
 
+
 RegisterNetEvent("fox:data:bankRqSelf")
 AddEventHandler("fox:data:bankRqSelf", function()
     local _src = source
