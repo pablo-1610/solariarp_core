@@ -21,7 +21,8 @@ end)
 Citizen.CreateThread(function()
     Wait(5000)
     while true do
-        TriggerClientEvent("fox:sync:time", -1, h, m)
+        --TriggerClientEvent("fox:sync:time", -1, h, m)
+        TriggerClientEvent("fox:sync:time", -1, os.date("*t", os.time()).hour, os.date("*t", os.time()).min)
         Wait(20*1000)
     end
 end)

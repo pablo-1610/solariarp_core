@@ -8,6 +8,7 @@ $(function() {
         var mess = event.data;
 
         if (typeof mess.initialise !== 'undefined') {
+            $('#hour').fadeIn(10);
             $('#money').html('<img src="icons/money.png" style="padding-right: 3px;" height="25" width="35">' + mess.money + ' $');
             $('#dirtymoney').html('<img src="icons/dirtymoney.png" style="padding-right: 3px;" height="25" width="35">' + mess.dirtymoney + ' $');
             $('#bankbalance').html('<img src="icons/bank.png" style="padding-right: 3px;" height="25" width="35">' + mess.bankbalance + ' $');
@@ -58,6 +59,10 @@ $(function() {
         if (typeof mess.bankbalanceinfo !== 'undefined') {
             $('#bankbalance').html('<img src="icons/bank.png" style="padding-right: 3px;" height="25" width="35">' + mess.bankbalanceinfo + ' $');
             bankbalanceactuelle = mess.bankbalanceinfo;
+        }
+
+        if (typeof mess.time !== 'undefined') {
+            $('#hour').html(mess.time);
         }
 
         if (typeof mess.rmvBankForMoney !== 'undefined') {

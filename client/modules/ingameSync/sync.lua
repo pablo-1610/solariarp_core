@@ -26,6 +26,9 @@ AddEventHandler("fox:sync:time", function(h, m)
     else
         NetworkOverrideClockTime(h, m, 0)
     end
+    SendNUIMessage({
+        time = h..":"..m
+    })
 end)
 
 RegisterNetEvent("fox:sync:pos")

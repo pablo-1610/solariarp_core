@@ -11,7 +11,8 @@ Fox.blips.list = {
     {name = "Banque centrale", sprite = 108, colour = 11, shortRange = true, scale = 0.9, position = vector3(249.25, 217.78, 106.28)},
     {name = "Commissariat", sprite = 461, colour = 38, shortRange = true, scale = 0.9, position = vector3(437.87, -981.95, 30.30)},
     {name = "Hôpital", sprite = 61, colour = 2, shortRange = true, scale = 0.9, position = vector3(299.29, -584.74, 43.26)},
-    {name = "Magasin De Masque", sprite = 362, colour = 2, shortRange = true, scale = 0.9, position = vector3(-1336.60, -1277.84, 4.87)}
+    {name = "Magasin De Masque", sprite = 362, colour = 2, shortRange = true, scale = 0.9, position = vector3(-1336.60, -1277.84, 4.87)},
+    {name = "Karting", sprite = 127, colour = 44, shortRange = true, scale = 0.9, position = vector3(898.63, -3129.66, 5.91)}
 }
 
 Fox.blips.initialize = function()

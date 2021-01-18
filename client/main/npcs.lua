@@ -1,3 +1,7 @@
+local noNPCZones = {
+    {base = vector3(974.14, -3173.79, 5.90), radius = 300.0}
+}
+
 local scenarios = {
     'WORLD_VEHICLE_ATTRACTOR',
     'WORLD_VEHICLE_AMBULANCE',
@@ -88,11 +92,21 @@ Fox.thread.tick(function()
         SetPedMinGroundTimeForStungun(PlayerPedId(), 10000)
         DisablePlayerVehicleRewards(PlayerId())
         HideHudComponentThisFrame(3)
-	    SetVehicleDensityMultiplierThisFrame(multiplier)
-	    SetPedDensityMultiplierThisFrame(multiplier)
-        SetRandomVehicleDensityMultiplierThisFrame(multiplier)
-	    SetParkedVehicleDensityMultiplierThisFrame(multiplier)
-        SetScenarioPedDensityMultiplierThisFrame(multiplier, multiplier)
+        for k,currentZone in pairs(noNPCZones) do
+            if GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), currentZone.base, true) <= currentZone.radius then
+                SetVehicleDensityMultiplierThisFrame(0.0)
+                SetPedDensityMultiplierThisFrame(0.0)
+                SetRandomVehicleDensityMultiplierThisFrame(0.0)
+                SetParkedVehicleDensityMultiplierThisFrame(0.0)
+                SetScenarioPedDensityMultiplierThisFrame(0.0, 0.0)
+            else
+                SetVehicleDensityMultiplierThisFrame(multiplier)
+                SetPedDensityMultiplierThisFrame(multiplier)
+                SetRandomVehicleDensityMultiplierThisFrame(multiplier)
+                SetParkedVehicleDensityMultiplierThisFrame(multiplier)
+                SetScenarioPedDensityMultiplierThisFrame(multiplier, multiplier)
+            end
+        end
         HudWeaponWheelIgnoreSelection()
     end
 end, "npcs")
