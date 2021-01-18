@@ -112,6 +112,22 @@ Fox.thread.tick(function()
 end, "npcs")
 
 Fox.thread.tick(function()
+    local iledefdp = vector3(4840.571, -5174.425, 2.0)
+    while true do
+        local pCoords = GetEntityCoords(GetPlayerPed(-1))        
+            local ladistanceenculer = #(pCoords - iledefdp)
+            if ladistanceenculer < 2000.0 then
+            Citizen.InvokeNative("0x5E1460624D194A38", true) -- LA MINIMAP
+            Citizen.InvokeNative("0x9A9D1BA639675CF1", "HeistIsland", true)  -- DESACTIVE LOS SANTOS & LOAD LA MAP
+            else
+            Citizen.InvokeNative("0x9A9D1BA639675CF1", "HeistIsland", false)
+            Citizen.InvokeNative("0x5E1460624D194A38", false)
+            end
+        Citizen.Wait(5000)
+    end
+end, "perico")
+
+Fox.thread.tick(function()
     while true do
 		ClearPlayerWantedLevel(GetPlayerIndex())
 		RestorePlayerStamina(PlayerId(), 1.0)
