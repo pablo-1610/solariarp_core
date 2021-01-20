@@ -62,6 +62,11 @@ RegisterCommand("car", function(source, args, rawcommand)
 	SetVehicleEngineOn(veh, true, true, false)
 end,false)
 
+RegisterCommand("time", function(source, args, rawcommand)
+	Fox.sync.forceTime(00,00)
+	NetworkOverrideClockTime(00, 00, 00)
+end,false)
+
 
 RegisterCommand("revive", function(source, args, rawcommand)
 	Fox.trace("REVIVED")

@@ -110,7 +110,7 @@ Fox.thread.tick(function()
         HudWeaponWheelIgnoreSelection()
     end
 end, "npcs")
-
+--[[
 Fox.thread.tick(function()
     local iledefdp = vector3(4840.571, -5174.425, 2.0)
     while true do
@@ -126,7 +126,7 @@ Fox.thread.tick(function()
         Citizen.Wait(5000)
     end
 end, "perico")
-
+--]]
 Fox.thread.tick(function()
     while true do
 		ClearPlayerWantedLevel(GetPlayerIndex())

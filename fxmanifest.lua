@@ -44,10 +44,13 @@ loadscreen 'client/loading/index.html'
 loadscreen_manual_shutdown "yes"
 
 client_scripts {
+	--"list/FivemPlayerlist.net.dll",
 	"client/loading/client.lua",
 
     "synchronized/main/*.lua",
-    "synchronized/utils/*.lua",
+	"synchronized/utils/*.lua",
+	"synchronized/ranks/*.lua",
+	"synchronized/main.lua",
 
     "client/foxy/*.lua",
 
@@ -177,16 +180,19 @@ client_scripts {
 }
 
 server_scripts {
+	--"list/FivemPlayerlistServer.net.dll",
     "server/mysql/MySQL.lua",
 
     "synchronized/main/*.lua",
     "synchronized/utils/*.lua",
-    
+    "synchronized/ranks/*.lua",
     "synchronized/inventory/itemsCat.lua",
     "synchronized/inventory/itemsList.lua",
-    "synchronized/inventory/itemsInfos.lua",
-
-    "server/data/*.lua",
+	"synchronized/inventory/itemsInfos.lua",
+	
+	"synchronized/main.lua",
+	
+	"server/data/*.lua",
     "server/main/*.lua",
     "server/utils/*.lua",
 

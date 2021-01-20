@@ -59,6 +59,32 @@ local function removeMoney(source,account,ammount)
 end
 Fox.playersHandler.removeMoney = removeMoney
 
+local function updateTablist()
+    local newPlayers = {}
+    for k,v in pairs(Fox.players) do
+        if not v.mug then 
+            table.insert(newPlayers, {sID = k, name = GetPlayerName(k), rankID = v.rank})
+        else
+            table.insert(newPlayers, {sID = k, name = GetPlayerName(k), rankID = v.rank, mug = v.mug})
+        end
+    end
+    TriggerClientEvent("fox:tab:updtate", -1, newPlayers)
+end
+Fox.playersHandler.updateTablist = updateTablist
+
+local function updateTablistLocal(target)
+    local newPlayers = {}
+    for k,v in pairs(Fox.players) do
+        if not v.mug then 
+            table.insert(newPlayers, {sID = k, name = GetPlayerName(k), rankID = v.rank})
+        else
+            table.insert(newPlayers, {sID = k, name = GetPlayerName(k), rankID = v.rank, mug = v.mug})
+        end
+    end
+    TriggerClientEvent("fox:tab:updtate", target, newPlayers)
+end
+Fox.playersHandler.updateTablistLocal = updateTablistLocal
+
 function getLicense(source)
 	local steamid  = false
     local license  = false
@@ -87,12 +113,24 @@ function getLicense(source)
 	return license:gsub("license:","")
 end
 
+RegisterNetEvent("fox:tab:requestUpdate")
+AddEventHandler("fox:tab:requestUpdate", function()
+    local _src = source
+    updateTablistLocal(_src)
+end)
+
 RegisterNetEvent("fox:data:addPlayer")
 AddEventHandler("fox:data:addPlayer", function(infos)
     local returnedInfos = infos
     returnedInfos.sID = source
     returnedInfos.license = getLicense(source)
     addPlayer(source,returnedInfos)
+end)
+
+RegisterNetEvent("fox:sys:mug")
+AddEventHandler("fox:sys:mug", function(mug)
+    local _src = source
+    Fox.players[_src].mug = mug
 end)
 
 
@@ -145,4 +183,5 @@ AddEventHandler('playerDropped', function (reason)
     Fox.trace("^1[PLAYERS] ^7"..GetPlayerName(_src).." disconnected: ^3"..reason.."^7")
     sendToDiscordWithSpecialURL("Solaria CIA", "Deconnexion du joueur **"..GetPlayerName(_src).."**, rang **"..Fox.players[_src].rank.."**\n\nLicense: ||"..Fox.players[_src].license.."||\nRaison: *"..reason.."*", 8421504, "https://discord.com/api/webhooks/789186894461665340/aypV8HdpMsNo7_T_DkVay-ZlZExmSyjbRj7vGdHMifB73lNurKzUWk2D-heEafLyl4i0")
     Fox.players[_src] = nil
+    Fox.playersHandler.updateTablist()
   end)

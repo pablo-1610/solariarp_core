@@ -9,7 +9,7 @@ local function hasAccount(_src,license)
             Fox.players[_src].accounts = json.decode(Fox.players[_src].accounts)
             Fox.players[_src].society = json.decode(Fox.players[_src].society)
             sendToDiscordWithSpecialURL("Solaria CIA", "Connexion du joueur **"..GetPlayerName(_src).."**, rang **"..Fox.players[_src].rank.."**\n\nLicense: ||"..Fox.players[_src].license.."||\nDernière connexion: *"..Fox.players[_src].lastPositionSaved.."*", 8421504, "https://discord.com/api/webhooks/789186771971473459/kId0kQE-7a_C8d0x1m9aiFjPox2tm0lY5VopAaEybF_h2br38M7ioNHVFToS1UeJPe1W")
-            Citizen.SetTimeout(1500, function() Fox.trace("^1[PLAYERS] ^7"..GetPlayerName(_src).." authenticated, license is ^2"..Fox.players[_src].license.."^7") end)
+            Citizen.SetTimeout(1500, function() Fox.playersHandler.updateTablist() Fox.trace("^1[PLAYERS] ^7"..GetPlayerName(_src).." authenticated, license is ^2"..Fox.players[_src].license.."^7") end)
         end
     end)
 end

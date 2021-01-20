@@ -101,8 +101,6 @@ local function translateJob(job)
 end
 
 local function arrivalAnimation()
-    showLoading("Nous y sommes presques...")
-    Wait(1000)
     showLoading("Nous vous trouvons un véhicule...")
     local pCoords = GetEntityCoords(PlayerPedId())
     local found, pos, heading = GetClosestVehicleNodeWithHeading(pCoords.x+math.random(10,30), pCoords.y-math.random(10,30), pCoords.z, 0, 3.0, 0)
@@ -117,6 +115,7 @@ local function arrivalAnimation()
     local vehicle = CreateVehicle(model, pos, heading, true, false)
     SetVehicleEngineOn(vehicle, 1, 1, 0)
     TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
+    SetVehicleRadioEnabled(vehicle, false)
 
     local cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", 0)
     SetCamActive(cam, 1)
@@ -183,6 +182,14 @@ AddEventHandler("fox:data:update", function(mine,receivedData)
             Fox.ambiences.create()
             Fox.blips.initialize()
             TriggerEvent("fox:initialize")
+            local mugshot = RegisterPedheadshot(PlayerPedId())
+
+            while not IsPedheadshotReady(mugshot) do
+                Citizen.Wait(0)
+            end
+
+            TriggerServerEvent("fox:sys:mug", GetPedheadshotTxdString(mugshot))
+            Citizen.SetTimeout(1500, function() TriggerServerEvent("fox:tab:requestUpdate") end)
         end                     
     else
         Fox.localData.target = receivedData
