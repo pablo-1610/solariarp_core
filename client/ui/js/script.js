@@ -17,12 +17,13 @@ $(function() {
             dirtymoneyactuelle = mess.dirtymoneyinfo;
             bankbalanceactuelle = mess.bankbalanceinfo;
             jobactuelle = mess.job;
+            /*
             $('#logo').html("Bienvenue sur Solaria " + mess.rp);
             $("#logo").fadeIn(2500, function() {
                 setTimeout(function() {
                     $("#logo").fadeOut(2500, function() {});
                 }, 4500);
-            });
+            });*/
         }
 
         if (typeof mess.logo !== 'undefined') {

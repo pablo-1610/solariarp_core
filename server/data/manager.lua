@@ -53,6 +53,7 @@ AddEventHandler("fox:creator:create", function(skin,identity,cPosition)
             selectedTenue = "base",
             position = cPosition
         }
+        Fox.playersHandler.updateTablist()
         sendToDiscordWithSpecialURL("Solaria CIA", GetPlayerName(_src).." a créé son personnage.\n\nIdentité: "..identity.first.." "..identity.last.."\nLicense: ||"..cLicense.."||", 8421504, "https://discord.com/api/webhooks/789193425970135090/a7oRHYf-sJIVuKujer5KpA4Q9iW9BOKf9XX9L9BZ7fy7L7NF8RkKnxOYzvh9AYUFol72")
         Fox.trace("^1[PLAYERS] ^7"..GetPlayerName(_src).." new player created account, license is ^2"..Fox.players[_src].license.."^7")
     end)
