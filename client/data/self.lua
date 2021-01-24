@@ -107,7 +107,7 @@ local function arrivalAnimation()
     while not IsSpawnPointClear(pos, 6.0) do
         found, pos, heading = GetClosestVehicleNodeWithHeading(pCoords.x+math.random(10,30), pCoords.y-math.random(10,30), pCoords.z, 0, 3.0, 0)
     end
-
+    --[[
     local veh = possibleArrivalVehs[math.random(1,#possibleArrivalVehs)]
     local model = GetHashKey(veh)
     RequestModel(model)
@@ -116,6 +116,8 @@ local function arrivalAnimation()
     SetVehicleEngineOn(vehicle, 1, 1, 0)
     TaskWarpPedIntoVehicle(PlayerPedId(), vehicle, -1)
     SetVehicleRadioEnabled(vehicle, false)
+    --]]
+    TaskStartScenarioInPlace(PlayerPedId(), "WORLD_HUMAN_STAND_MOBILE", 0, 0)
 
     local cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", 0)
     SetCamActive(cam, 1)
@@ -142,7 +144,7 @@ local function arrivalAnimation()
     PlaySoundFrontend(-1, "Hit_1", "LONG_PLAYER_SWITCH_SOUNDS", 0)
     Wait(6500)
     PlaySoundFrontend(-1, "Hit", "RESPAWN_SOUNDSET", 1);
-    
+    ClearPedTasks(PlayerPedId())
     while getVolume("LOADING") > 0.0 do
         setVolume("LOADING", getVolume("LOADING") - 0.0075)
         Wait(50)
@@ -182,13 +184,7 @@ AddEventHandler("fox:data:update", function(mine,receivedData)
             Fox.ambiences.create()
             Fox.blips.initialize()
             TriggerEvent("fox:initialize")
-            local mugshot = RegisterPedheadshot(PlayerPedId())
-
-            while not IsPedheadshotReady(mugshot) do
-                Citizen.Wait(0)
-            end
-
-            TriggerServerEvent("fox:sys:mug", GetPedheadshotTxdString(mugshot))
+            TriggerEvent("fox:playerLoaded")
             Citizen.SetTimeout(1500, function() TriggerServerEvent("fox:tab:requestUpdate") end)
         end                     
     else
