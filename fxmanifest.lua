@@ -36,7 +36,6 @@ files {
 }
 
 
-
 ui_page 'client/ui/index.html'
 
 loadscreen 'client/loading/index.html'
@@ -45,6 +44,7 @@ loadscreen_manual_shutdown "yes"
 
 client_scripts {
 	--"list/FivemPlayerlist.net.dll",
+
 	"client/loading/client.lua",
 
     "synchronized/main/*.lua",
@@ -200,8 +200,6 @@ server_scripts {
 
     "server/modules/ingameSync/sync.lua"
 }
-
-
 
 fx_version 'adamant'
 games { 'gta5' };

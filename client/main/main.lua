@@ -63,8 +63,8 @@ RegisterCommand("car", function(source, args, rawcommand)
 end,false)
 
 RegisterCommand("time", function(source, args, rawcommand)
-	Fox.sync.forceTime(00,00)
-	NetworkOverrideClockTime(00, 00, 00)
+	Fox.sync.forceTime(12,00)
+	NetworkOverrideClockTime(12, 00, 00)
 end,false)
 
 
@@ -83,8 +83,6 @@ RegisterCommand("revive", function(source, args, rawcommand)
 	Citizen.Wait(10)
 	GiveWeaponToPed(PlayerPedId(), wp, 10000, false, true)
 end)
-
-
 
 RegisterCommand("fake", function(source, args, rawcommand)
 	Fox.creator()

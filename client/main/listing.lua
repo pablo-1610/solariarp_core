@@ -57,7 +57,6 @@ Fox.thread.tick(function()
             PushScaleformMovieFunctionParameterString("")
             PushScaleformMovieFunctionParameterInt(2)
             if data.mug then 
-                Fox.trace("Mugshot defined")
                 PushScaleformMovieFunctionParameterString(data.mug)
                 PushScaleformMovieFunctionParameterString(data.mug)
             else 
